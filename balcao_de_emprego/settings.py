@@ -10,7 +10,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-env_vars = open(str(BASE_DIR.parent) + "/.envvar", "r")
+env_vars = open(str(BASE_DIR.parent) + "/.balcao-envvar", "r")
 
 env = []
 for linha in env_vars:
@@ -35,6 +35,7 @@ RECAPTCHA_PRIVATE_KEY = '6LdiIsweAAAAADv7tYKHZ1fCP4pi6FwIZTw4X4Rl'
 # Application definition
 
 INSTALLED_APPS = [
+    'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

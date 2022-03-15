@@ -1,0 +1,35 @@
+{% load static %}
+{% load bootstrap5 %}
+
+{% load widget_tweaks %}
+<form id="form_cadastro_vaga" method="post" class="form w-100">
+    <div class="row">
+        <div class="col px-5">
+            {% csrf_token %}
+            {% for f in form %}                
+            <label class="text-uppercase" for="id_{{f.name}}">{{f.label}}:</label>
+            {% if f.errors %}
+                {{f|add_class:'form-control my-2 is-invalid'}}
+            {% else %}
+                {{f|add_class:'form-control bg-light my-2'}}
+            {% endif  %}
+            <div class="invalid-feedback mb-2">
+                {{f.errors}}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary text-white w-100 mt-3">
+              Cadastrar
+            </button>
+
+        </div>      
+    </div>    
+    <style>
+        #form_cadastro_vaga ul, li{
+            list-style: none;
+        }
+        #form_cadastro_vaga button:hover{
+            color: white !important;
+        }
+    </style>
+</form>

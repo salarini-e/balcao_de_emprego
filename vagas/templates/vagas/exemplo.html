@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% load widget_tweaks %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa do Trabalhador</title>    
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        head, body{
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body class="container-fluid bg-light">
+    <header class="row">
+        <div class="col px-2 py-2 d-flex border">                        
+            <img class="logo" src="{% static 'images/logo.jpg' %}" alt="logo">
+            <div class="p-2 right">
+                <img class="logo" src="{% static 'images/casa-do-trabalhador.png' %}" alt="">
+            </div>
+        </div>
+    </header>
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+    
+    {# Display a form #}
+    <div class="pb-5">
+        <form method="post" class="form">
+            <div class="row">
+                <div class="p-5 d-flex">
+                    <h3 class="m-auto">
+                        Formulário para divulgação de vagas
+                    </h3>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-around flex-wrap">
+                <!-- <div class="col-5 px-5">
+                    <h4 class="text-justify">Alguma coisa escrita aqui a respeito da proteção de dados.</h4>
+                    <p class="text-justify paragrafar">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor maximus ante, sit amet sodales odio gravida finibus. Cras molestie lectus ac ipsum finibus, non finibus purus dictum. Nulla suscipit quam eu elit egestas, ac hendrerit neque convallis. Duis quis metus volutpat tortor scelerisque accumsan. Sed quis libero lacus. Aenean eget ipsum sit amet nunc elementum tincidunt. Suspendisse non nisi id odio faucibus ultrices. Aliquam erat volutpat.</p>
+                    <p class="text-justify paragrafar">Nam ac iaculis velit. Suspendisse in viverra elit. In et elit diam. Sed odio dui, pulvinar et risus non, scelerisque lacinia mi. Etiam commodo scelerisque hendrerit. Phasellus est felis, lobortis cursus blandit at, bibendum in tellus. Ut ut vestibulum sem, at commodo sapien. Donec aliquam lectus sed lacus fermentum bibendum. Praesent aliquet dignissim urna, commodo pharetra elit aliquet et. Nullam fringilla laoreet purus at pellentesque. In hac habitasse platea dictumst. Sed et augue sit amet elit volutpat condimentum tristique eu nibh. Etiam vulputate justo in orci dapibus suscipit. Aliquam eu ipsum est. Mauris elit enim, maximus ac enim fringilla, suscipit euismod enim.</p>
+                </div> -->
+                <div class="col-5 px-5">
+                    {% csrf_token %}
+                    {% for f in form %}                
+                    <label for="id_{{f.name}}">{{f.label}}:</label>
+                    {% if f.errors %}
+                        {{f|add_class:'form-control my-2 is-invalid'}}
+                    {% else %}
+                        {{f|add_class:'form-control my-2'}}
+                    {% endif  %}
+                    <div class="invalid-feedback mb-2">
+                        {{f.errors}}
+                    </div>
+                    {% endfor %}
+                    {% buttons %}
+                    <button type="submit" class="btn btn-primary w-100 mt-3">
+                      Cadastrar
+                    </button>
+                  {% endbuttons %}
+                </div>      
+            </div>    
+        </form>
+    </div>
+
+</body>
+</html>
