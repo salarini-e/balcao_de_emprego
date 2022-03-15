@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% load bootstrap5 %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa do Trabalhador</title>    
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        head, body{
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body class="d-flex">
+<div class="col-3 mx-auto p-5 rounded" style="margin-top: 8%;">
+    <form action="/url/to/submit/" method="post" class="form">
+        <h1>LOGIN</h1>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Nunca iremos compartilhar seu email para ninguém.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">            
+          </div>
+          <button type="submit" class="btn btn-primary">Entrar</button>
+    </form>
+</div>
+</body>
+</html>
