@@ -1,0 +1,81 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/mobile.css' %}">
+{% endblock %}
+{% block head_js %}
+{% endblock %}
+{% block header %}
+{% include 'header.html' %}
+{% endblock %}
+{% block main%}
+<div class="row pt-4" style="margin: 0 19px;">
+    <div id="div_menu" class="col border">
+        <div id="myNavBar">
+            <a class="btn" href="/">Página Inicial</a>
+            <a class="btn" href="/login">Login</a>
+        </div>
+        <span id="closeBtn" class="btn btn-btfl ms-auto" onclick="closeMenu()"> FECHAR</span>
+    </div>
+</div>
+<div id="main" class="row">
+    <div class="col">
+        <div class="row">
+            <div id="lateral" class="col-3">
+                <div class="menu-lateral">
+                    <a href="/">
+                        <img src="/static/images/casa-do-trabalhador.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div id="conteudo" class="col text-center">
+                <div class="conteudo row">
+                    {% block main_conteudo %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<div id="mobile" class="row">
+    <div class="col">
+        <div class="row">
+            <div id="lateral" class="col-3">
+                <div class="menu-lateral">
+                    <img src="/static/images/casa-do-trabalhador.png" alt="">
+                </div>
+            </div>
+            <div id="conteudo" class="col text-center">
+                <div class="conteudo row">
+                    {% block main_conteudo_for_mobile %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+{% endblock %}
+{% block end_js %}
+<script>
+    function showMenu(){        
+        document.getElementById('closeBtn').style.opacity=1;
+        div_menu=document.getElementById('div_menu')        
+        div_menu.style.height='auto';
+        div_menu.style.fontSize='12pt';
+        div_menu.style.opacity=1;
+        div_menu.style.paddingBottom='8px';
+        div_menu.style.paddingTop='8px'
+        setTimeout(document.getElementById('myNavBar').style.display='flex', 1000);
+        
+    }
+    function closeMenu(){
+        document.getElementById('closeBtn').style.opacity=0;
+        div_menu=document.getElementById('div_menu')
+        div_menu.style.height='0px';
+        div_menu.style.fontSize='0pt';
+        div_menu.style.opacity=0
+        div_menu.style.paddingBottom='0px';
+        div_menu.style.paddingTop='0px'
+        setTimeout(document.getElementById('myNavBar').style.display='none', 1000);
+    }
+</script>
+{% endblock %}

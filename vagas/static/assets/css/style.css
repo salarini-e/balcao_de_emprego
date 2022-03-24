@@ -1,0 +1,44 @@
+#main{
+    padding-bottom: 50px;
+}
+#main #lateral{
+    padding-top: 40px;
+    display: flex;    
+}
+#main #lateral .menu-lateral{  
+    height: 320px;  
+    background-color: rgb(255, 255, 255);
+    padding: 30px 30px;
+    margin: 0 auto;
+    border: 1px solid rgba(0, 0, 0, 0.116);
+}
+#main #lateral .menu-lateral img{    
+    height: 250px;
+}
+#main .titulo{
+    color: #507B9B;
+    background-color: rgba(128, 128, 128, 0.13);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 4rem;
+}
+
+#main #conteudo{    
+    padding-top: 40px ;
+    padding-right: 40px;        
+}
+#main #conteudo .conteudo{
+    padding: 40px 20px;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(0, 0, 0, 0.116);
+}
+
+#main #conteudo .conteudo #vagas_destaque{
+    text-align: start;
+    padding: 50px 50px 50px 50px;
+}
+#main #conteudo .conteudo #vagas_destaque table{
+    text-align: center;
+}
+

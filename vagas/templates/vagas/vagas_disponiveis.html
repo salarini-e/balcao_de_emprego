@@ -1,0 +1,56 @@
+{% extends 'base_site.html' %}
+{% load static %}
+{% block css %}
+{{block.super}}
+{% endblock%}
+{% block main_conteudo %}
+<div class="col">
+    <h2 class="text-start">VAGAS DISPONIVEIS</h2>
+    <table class="table table-hover mt-4">
+      <thead>
+          <tr> 
+              {% if user.is_authenticated %}
+              <th></th>
+              {% endif %}
+              <th scope="col">#</th>
+              <th scope="col">Cargo</th>
+              <!-- <th scope="col">Empresa</th>
+              <th scope="col">Vagas</th> -->
+              <th scope="col">Experiência</th>
+              <th scope="col">Escolaridade</th>                            
+            </tr>
+          </thead>
+          <tbody>
+          {% for vaga in vagas %}        
+          <tr onpointerover="showEditIcon(editIcon_1532{{vaga.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{vaga.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:alterar_vaga' vaga.id %}')"{% endif %}>
+            {% if user.is_authenticated %}
+              <td style="vertical-align: middle;"><img id="editIcon_1532{{vaga.id}}d1sa56" style="height: 18px;" src="{% static 'images/edit-icon.png' %}" alt=""></td>     
+              {% endif %}
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{vaga.vaga}}</td>            
+              <!-- <td>{{vaga.empresa}}</td>
+              <td>{{vaga.quantidadeVagas}}</td> -->
+              <td>{{vaga.experiencia}}</td>      
+              <td>{{vaga.escolaridade}}</td>                     
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+    <style>
+      td img{
+        visibility: hidden;
+      }
+      table{
+        font-size:  0.9em;
+      }
+    </style>
+    <script>
+      function showEditIcon(id){
+        id.style.visibility='visible'              
+      }
+      function hiddenEditIcon(id){
+        id.style.visibility='hidden'              
+      }
+    </script>
+</div>
+{% endblock %}

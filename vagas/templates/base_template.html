@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">    
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Casa do Trabalhador</title>    
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- END FONTAWESOME -->
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/template.css' %}">
+    {% block css %}
+    {% endblock %}
+    <!-- END CUSTOM CSS -->
+    <!-- CUSTOM JS -->
+    {% block head_js %}
+    {% endblock %}
+    <!-- END CUSTOM JS -->
+</head>
+<body class="container-fluid">
+    {% block header%}{% endblock %}
+    <main class="">
+        {% block main %}{% endblock %}
+    </main>
+</body>
+<!-- CUSTOM END JS -->
+{% block end_js %}
+{% endblock %}
+<!-- END CUSTOM END JS -->
+</html>

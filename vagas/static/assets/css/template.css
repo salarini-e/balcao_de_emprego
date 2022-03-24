@@ -1,0 +1,111 @@
+html, body{
+    height: 100%;
+    min-width: 410px;
+}
+body{
+    background-color: rgb(255, 255, 255);
+}
+header{
+    min-width: 410px;;
+    background-color: white;
+}
+header a{
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    color: black;
+    text-decoration: none;
+}
+header a:hover{
+    color: #507B9B;
+}
+.container{
+    background-color: white;
+
+}
+.m-auto{
+    margin: auto;
+}
+
+.btn-primary{
+    background-color: #507B9B;
+    border-color: #507B9B;
+}
+.btn-primary:hover{    
+    margin-top: -3px;
+    margin-bottom: 3px;
+    background-color: #507B9B;
+    border-color: #507B9B;
+    box-shadow:  4px 4px 2px #507b9b52;
+}
+.btn-primary:focus{
+    margin-top: -3px;
+    margin-bottom: 3px;
+    background-color: #507B9B;
+    border-color: #507B9B;
+    box-shadow:  4px 4px 2px #507b9b52;
+}
+header .menu:focus{    
+    box-shadow: none;
+    -webkit-animation:spin 0.5s linear;
+    -moz-animation:spin 0.5s linear;
+    animation:spin 0.5s linear;
+}
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(180deg); } 
+}
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(180deg); } 
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(180deg); 
+        transform:rotate(180deg); 
+    } 
+}
+.btn{
+    border-radius: 0;
+}
+
+
+.btn-btfl{
+    box-shadow:  4px 4px 2px #507b9ba9;
+    background-color: #329787;
+    color: white;  
+}
+.btn-btfl:hover{
+    color: white;
+    padding: 10px 18px;
+    box-shadow:  4px 4px 2px #507b9b;
+}
+.btn-btfl:focus{
+    padding: 8px 16px;
+    color: white;
+    box-shadow:  4px 4px 2px #507b9b;
+}
+
+#mobile{
+    display: none;
+}
+
+body{
+    background-color: rgb(248, 247, 247);
+}
+
+#div_menu{   
+    display: flex; 
+    font-size: 0;
+    height: 0;
+    opacity: 0;
+    background-color: white;        
+    transition: height 0.3s linear, opacity 0.6s linear, font-size 0.3s linear, padding-top 0.3s linear, padding-bottom 0.3s linear;
+}
+
+#closeBtn{
+    padding: 6px 8px;
+}
+.show {
+    opacity: 1;
+  }
+
+

@@ -3,11 +3,14 @@
 	<head>
 		<title>Casa do Trabalhador</title>
 		<meta charset="utf-8" />
+		{% load static %}
+		<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         {% load bootstrap5 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
 		<link rel="stylesheet" href="/static/assets/css/main.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	</head>
 	<body class="is-preload">
 
@@ -21,10 +24,10 @@
                         </a></h1>
 						<nav class="links">
 							<div class="header-links m-auto">
-                                <a href="#">Inicio</a>
-                                <a href="#">Vagas Disponiveis</a>
+                                <a href="{% url 'vagas:home' %}">Inicio</a>
+                                <a href="{% url 'vagas:vagas' %}">Vagas Disponiveis</a>
 								{% if user.is_authenticated %}
-                                <a href="#">Cadastrar Vaga</a>
+                                <a href="{% url 'vagas:cadastrar_vaga' %}">Cadastrar Vaga</a>
 								{% endif %}
                             </div>
 						</nav>
@@ -56,42 +59,35 @@
 							</section> -->
 
 						<!-- Links -->
-							<!-- <section>
+							<section>
 								<ul class="links">
 									<li>
-										<a href="#">
-											<h3>Lorem ipsum</h3>
-											<p>Feugiat tempus veroeros dolor</p>
+										<a href="{% url 'vagas:home' %}">
+											<h3>Inicio</h3>											
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<h3>Dolor sit amet</h3>
-											<p>Sed vitae justo condimentum</p>
+											<h3>VAGAS DISPONIVEIS</h3>											
 										</a>
 									</li>
+									{% if user.is_authenticated %}
 									<li>
-										<a href="#">
-											<h3>Feugiat veroeros</h3>
-											<p>Phasellus sed ultricies mi congue</p>
+										<a href="{% url 'vagas:cadastrar_vaga' %}">
+											<h3>Cadastrar vaga</h3>											
 										</a>
 									</li>
-									<li>
-										<a href="#">
-											<h3>Etiam sed consequat</h3>
-											<p>Porta lectus amet ultricies</p>
-										</a>
-									</li>
+									{% endif %}
 								</ul>
-							</section> -->
+							</section>
 
 						<!-- Actions -->
 							<section>
 								<ul class="actions stacked">
                                     {% if user.is_authenticated %}
-									<li><a href="#" class="button large fit">Logout</a></li>
+									<li><a href="{% url 'vagas:logout' %}" class="button large fit">Logout</a></li>
                                     {% else %}
-                                    <li><a href="#" class="button large fit">Login</a></li>
+                                    <li><a href="{% url 'vagas:login' %}" class="button large fit">Login</a></li>
                                     {% endif %}
 								</ul>
 							</section>
@@ -114,6 +110,9 @@
 								<header>
 									<img class="logo" src="/static/images/casa-do-trabalhador.png" alt="">									
 								</header>
+								{% if user.is_authenticated %}
+								<h5 class="mt-4 text-center">{{user}}</h5>
+								{% endif %}
 							</section>
 
 						<!-- Mini Posts -->

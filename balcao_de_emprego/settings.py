@@ -27,7 +27,7 @@ email_pass = env[6]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = eval(debug)
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', '192.168.1.109']
 
 RECAPTCHA_PUBLIC_KEY = '6LdiIsweAAAAAKHnfIgGx1V-olIVbAFEBUJY5MHb'
 RECAPTCHA_PRIVATE_KEY = '6LdiIsweAAAAADv7tYKHZ1fCP4pi6FwIZTw4X4Rl'
@@ -138,7 +138,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 LOGIN_URL='/login'
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/login'
+LOGOUT_REDIRECT_URL = 'accounts/login'
 
 
 # Default primary key field type
@@ -156,3 +156,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = email_user
 EMAIL_HOST_PASSWORD = email_pass
+X_FRAME_OPTIONS = 'SAMEORIGIN'

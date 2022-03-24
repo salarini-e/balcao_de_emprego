@@ -1,25 +1,45 @@
-{% extends 'vagas/template.html' %}
-{% block main %}
-<!-- Post -->
-<article class="post">
-    <header>
-        <div class="title">
-            <h2>Formulário para divulgação de vagas</h2>
-        </div>								
-    </header>
-    
-    <div>                                    
-        {% include 'vagas/form_cadastro_vaga.html' %}
+{% extends 'base_site.html' %}
+{% load static %}
+{% block css %}
+{{block.super}}
+{% endblock%}
+{% block main_conteudo %}
+<div class="col">
+    <h1 class="titulo">SEJA BEM VINDO</h1>
+    <p style="margin-top: 50px;margin-bottom: 15px;">Seja muito bem vindo ao Portal de Emprego da Casa do Trabalhador de Nova Friburgo!</p>
+    <p style="margin-bottom: 40px;">Temos no total <b>{{qnt_vagas}} {% if qnt_vagas > 1 %}cargos disponiveis{% else %}cargo disponivel{% endif %}</b>! Veja nossas vagas agora!</p> 
+    <a class="btn btn-btfl" href="/vagas">
+        <h1 class="px-5">VER TODAS AS VAGAS DISPONIVEIS</h1>
+    </a>
+    <div id="vagas_destaque">
+        {% if qnt_vagas != 0 %}
+        <h3>VAGAS EM DESTAQUE</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Cargo</th>
+                    <!-- <th scope="col">Empresa</th>
+                    <th scope="col">Vagas</th> -->
+                    <th scope="col">Experiência</th>
+                    <th scope="col">Escolaridade</th>
+        
+                </tr>
+                </thead>
+                <tbody>
+                {% for vaga in vagas %}        
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{vaga.vaga}}</td>            
+                    <!-- <td>{{vaga.empresa}}</td>
+                    <td>{{vaga.quantidadeVagas}}</td> -->
+                    <td>{{vaga.experiencia}}</td>      
+                    <td>{{vaga.escolaridade}}</td>      
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </div>
-    <!-- <footer>
-        <ul class="actions">
-            <li><a href="single.html" class="button large">Continue Reading</a></li>
-        </ul>
-        <ul class="stats">
-            <li><a href="#">General</a></li>
-            <li><a href="#" class="icon solid fa-heart">28</a></li>
-            <li><a href="#" class="icon solid fa-comment">128</a></li>
-        </ul>
-    </footer> -->
-</article>
+</div>
 {% endblock %}
