@@ -2,7 +2,7 @@
     padding-bottom: 50px;
 }
 #main #lateral{
-    padding-top: 40px;
+    padding-top: 30px;
     display: flex;    
 }
 #main #lateral .menu-lateral{  
@@ -24,7 +24,7 @@
 }
 
 #main #conteudo{    
-    padding-top: 40px ;
+    padding-top: 30px ;
     padding-right: 40px;        
 }
 #main #conteudo .conteudo{

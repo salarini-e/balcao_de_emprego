@@ -100,7 +100,18 @@ body{
     background-color: white;        
     transition: height 0.3s linear, opacity 0.6s linear, font-size 0.3s linear, padding-top 0.3s linear, padding-bottom 0.3s linear;
 }
+#div_menu #myNavBar .btn{
+    width: 160px;
+}
 
+#div_menu #myNavBar a{
+    color: rgb(37, 37, 37);
+    font-weight: bold;
+}
+#div_menu #myNavBar .btn:hover{  
+    background-color: #2a2b2a;
+    color: white; 
+}
 #closeBtn{
     padding: 6px 8px;
 }
