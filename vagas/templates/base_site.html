@@ -37,22 +37,7 @@
         </div>
     </div>    
 </div>
-<div id="mobile" class="row">
-    <div class="col">
-        <div class="row">
-            <div id="lateral" class="col-3">
-                <div class="menu-lateral">
-                    <img src="/static/images/casa-do-trabalhador.png" alt="">
-                </div>
-            </div>
-            <div id="conteudo" class="col text-center">
-                <div class="conteudo row">
-                    {% block main_conteudo_for_mobile %}{% endblock %}
-                </div>
-            </div>
-        </div>
-    </div>    
-</div>
+{% include 'base_for_mobile.html' %}
 {% endblock %}
 {% block end_js %}
 <script>

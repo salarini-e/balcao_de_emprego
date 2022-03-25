@@ -27,7 +27,7 @@ email_pass = env[6]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = eval(debug)
 
-ALLOWED_HOSTS = ['localhost', '192.168.1.109']
+ALLOWED_HOSTS = ['localhost', '192.168.1.109', 'casadotrabalhador.pmnf.rj.gov.br']
 
 RECAPTCHA_PUBLIC_KEY = env[7]
 RECAPTCHA_PRIVATE_KEY = env[8]
