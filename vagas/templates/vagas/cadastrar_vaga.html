@@ -1,25 +1,101 @@
-{% extends 'vagas/template.html' %}
-{% block main %}
-<!-- Post -->
-<article class="post">
-    <header>
-        <div class="title">
-            <h2>Formulário para divulgação de vagas</h2>            
-        </div>								
-    </header>
-    
-    <div>                                    
-        {% include 'vagas/form_cadastro_vaga.html' %}
+{% extends 'base_site.html' %}
+{% block title %}{{tipo_cadastro}} Vaga{% endblock %}
+{% block css %}
+{{block.super}}
+{% endblock%}
+{% block main_conteudo %}
+{% load widget_tweaks %}   
+{% load bootstrap5 %}                  
+<div class="row">
+    <div class="col d-flex">
+      <h2 class="text-start text-uppercase">{{ tipo_cadastro }} VAGA</h2>
+      {% if request.user.is_staff %}
+      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:vagas' %}">Voltar</a></span>
+      {% endif %}
     </div>
-    <!-- <footer>
-        <ul class="actions">
-            <li><a href="single.html" class="button large">Continue Reading</a></li>
-        </ul>
-        <ul class="stats">
-            <li><a href="#">General</a></li>
-            <li><a href="#" class="icon solid fa-heart">28</a></li>
-            <li><a href="#" class="icon solid fa-comment">128</a></li>
-        </ul>
-    </footer> -->
-</article>
+  </div>
+<form id="form_cadastro_vaga" method="post" class="form w-100 text-start">
+    <div class="row">
+        <div class="col px-5">
+            {% if success.0 %}
+            <div class="row px-2 mb-3">
+                <div class="col d-flex bg-success">
+                    <p class="m-auto text-white">{{success.1}}</p>
+                </div>
+            </div>
+            {% endif %}
+            {% csrf_token %}
+            {% for f in form %}                
+            {% if not f.name in hidden %}
+                <label class="text-uppercase" for="id_{{f.name}}">{{f.label}}:</label>
+            {% endif %}
+            {% if f.errors %}
+                {{f|add_class:'form-control  my-2 is-invalid'}}
+            {% elif f.name == 'destaque' %}
+            <div class="form-check form-switch" style="margin: 0; padding-left: 0;">                                                
+                {{f|add_class:'form-check-input my-2'|attr:'type:checkbox'|attr:'role=switch'|attr:"onclick=destacar()"}}
+                <span id="span_destaque">{% if f.value %}Sim, destacar.{% else %}Não destacar.{% endif %}</span>
+            </div>
+            {% else %}
+                {{f|add_class:'form-control bg-light my-2'}}
+            {% endif  %}
+            <div class="invalid-feedback mb-2">
+                {{f.errors}}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary text-white w-100 mt-3">
+            {{tipo_cadastro}}
+            </button>
+
+        </div>      
+    </div>    
+    <style>
+        #form_cadastro_vaga ul, li{
+            list-style: none;
+        }
+        #form_cadastro_vaga button:hover{
+            background-color: #329787 !important;
+            border-color: #329787
+            color: white !important;
+        }
+        #form_cadastro button, .btn-primary{
+            background-color: #329787 !important;
+            border-color: #329787;
+        }
+        #id_ativo{
+            opacity: 0;
+        }
+        .form-check{
+            display: flex;            
+        }
+        .form-switch span{
+            margin-left: 10px;
+            padding-top: 4px;
+        }
+
+        .form-switch .form-check-input{
+            margin-left: 0;
+        }
+        .form-check-input:checked[type=checkbox]{
+            background-color:#329787;
+        }
+        ul, li{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</form>
+<script>
+    function destacar(){
+        span_destaque=document.getElementById('span_destaque')
+        if (span_destaque.innerText=='Sim, destacar.'){
+            span_destaque.innerText='Não destacar.';
+        }else{
+            span_destaque.innerText='Sim, destacar.';
+        }
+    }
+</script>
+
+
 {% endblock %}

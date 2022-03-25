@@ -33,6 +33,7 @@ def cadastrar_vaga(request):
     else:
         form=CadastroVagasForm(initial={'ativo': True,'user':request.user})
     context={
+        'tipo_cadastro': 'Cadastrar',
         'form': form,
         'hidden': ['user', 'ativo']
     }
@@ -52,6 +53,7 @@ def alterar_vaga(request, id):
         form=CadastroVagasForm(instance=vaga)
 
     context={
+        'tipo_cadastro': 'Alterar',
         'form': form,
         'hidden': ['user', 'ativo']
     }

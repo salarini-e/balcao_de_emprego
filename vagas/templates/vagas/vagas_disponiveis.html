@@ -1,11 +1,20 @@
 {% extends 'base_site.html' %}
 {% load static %}
+{% block title %}Vagas Ofertadas{% endblock %}
 {% block css %}
 {{block.super}}
 {% endblock%}
 {% block main_conteudo %}
 <div class="col">
-    <h2 class="text-start">VAGAS DISPONÍVEIS</h2>
+    <!-- <h2 class="text-start">VAGAS DISPONÍVEIS</h2> -->
+    <div class="row">
+      <div class="col d-flex">
+        <h2 class="text-start">VAGAS OFERTADAS</h2>
+        {% if request.user.is_staff %}
+        <span class="ms-auto"><a class="btn btn-btfl" href="{% url 'vagas:cadastrar' %}">CADASTRAR</a></span>
+        {% endif %}
+      </div>
+    </div>
     <table class="table table-hover mt-4">
       <thead>
           <tr> 
