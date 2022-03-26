@@ -1,6 +1,6 @@
 html, body{
     height: 100%;
-    min-width: 410px;
+    min-width: 600px;
 }
 body{
     background-color: rgb(255, 255, 255);
@@ -8,6 +8,9 @@ body{
 header{
     min-width: 410px;;
     background-color: white;
+}
+#main-logo{
+    height: 5rem;
 }
 header a{
     font-weight: bold;
@@ -93,15 +96,17 @@ body{
 }
 
 #div_menu{   
-    display: flex; 
-    font-size: 0;
-    height: 0;
-    opacity: 0;
+    display: flex;     
+    opacity: 1;
+    padding: 8px 8px;
     background-color: white;        
     transition: height 0.3s linear, opacity 0.6s linear, font-size 0.3s linear, padding-top 0.3s linear, padding-bottom 0.3s linear;
 }
+#div_menu #myNavBar{
+    display: flex;
+}
 #div_menu #myNavBar .btn{
-    width: 160px;
+    min-width: 160px;
 }
 
 #div_menu #myNavBar a{
@@ -125,4 +130,30 @@ body{
   .bg-primary{
     background-color: rgb(80, 123, 155) !important;
   }
-
+.hidden{
+    opacity: 0;
+}
+.mobile{
+    display: none;
+}
+@media (max-width: 800px){
+    .mobile{
+        display: block;
+    }
+    .tablet_hidden{
+        display: none;
+    }
+    #div_menu{   
+        display: flex; 
+        font-size: 0;
+        height: 0;
+        opacity: 0;
+        background-color: white;        
+        transition: height 0.3s linear, opacity 0.6s linear, font-size 0.3s linear, padding-top 0.3s linear, padding-bottom 0.3s linear;
+    }
+}
+@media (max-width: 660px){
+    .mobile_hidden{
+        display: none;
+    }
+}

@@ -12,11 +12,19 @@
 {% block main%}
 <div class="row pt-4" style="margin: 0 19px;">
     <div id="div_menu" class="col border">
-        <div id="myNavBar">
-            <a class="btn" href="/"><i class="fas fa-home me-2"></i>Página Inicial</a>
-            <a class="btn" href="/login"><i class="fas fa-user me-2"></i>Login</a>
+        <div id="myNavBar" class="w-100 justify-content-beetween"                                                                                                                                                                                                                                                                >
+            <a class="btn" href="/"><i class="fas fa-home me-2"></i><span class="mobile_hidden">Página Inicial</span></a>            
+            <a class="btn" href="{% url 'vagas:vagas' %}"><i class="fas fa-briefcase me-2"></i><span class="mobile_hidden">Vagas Ofertadas</span></a>
+            {% if request.user.is_staff %}
+            <a class="btn ms-auto" href="/admin"><i class="fas fa-coffee me-2"></i></i>Administração</a>
+            {% else %}
+            {% if request.user.is_authenticated %}
+            <a class="btn ms-auto" href="#"><i class="fas fa-coffee me-2"></i></i>Minha Conta</a>
+            {% endif %}
+            {% endif %}
+
         </div>
-        <span id="closeBtn" class="btn btn-btfl ms-auto" onclick="closeMenu()"> FECHAR</span>
+        <span id="closeBtn" class="mobile btn btn-btfl ms-auto" onclick="closeMenu()"> FECHAR</span>
     </div>
 </div>
 <div id="main" class="row">
@@ -49,7 +57,7 @@
         div_menu.style.opacity=1;
         div_menu.style.paddingBottom='8px';
         div_menu.style.paddingTop='8px'
-        setTimeout(document.getElementById('myNavBar').style.display='flex', 1000);
+        setTimeout(teste('flex'), 1000);
         
     }
     function closeMenu(){
@@ -60,7 +68,10 @@
         div_menu.style.opacity=0
         div_menu.style.paddingBottom='0px';
         div_menu.style.paddingTop='0px'
-        setTimeout(document.getElementById('myNavBar').style.display='none', 1000);
+        setTimeout(teste('none'), 1000);
+    }
+    function teste(v){
+        document.getElementById('myNavBar').style.display=v
     }
 </script>
 {% endblock %}
