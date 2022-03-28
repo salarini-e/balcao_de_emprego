@@ -1,9 +1,12 @@
 @media (max-width: 800px){
-    #main{
+    #main #lateral{
         display: none;
     }
     #mobile{
      display: flex;
+ }
+ #conteudo{
+     margin-left: 30px;
  }
 }
 

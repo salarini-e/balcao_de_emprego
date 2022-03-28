@@ -136,9 +136,12 @@ body{
 .mobile{
     display: none;
 }
+.mobile_show{
+    display: none;
+}
 @media (max-width: 800px){
     .mobile{
-        display: block;
+        display: flex;
     }
     .tablet_hidden{
         display: none;
@@ -155,5 +158,8 @@ body{
 @media (max-width: 660px){
     .mobile_hidden{
         display: none;
+    }
+    .mobile_show{
+        display: block;
     }
 }
