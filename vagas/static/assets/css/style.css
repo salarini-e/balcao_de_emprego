@@ -6,14 +6,17 @@
     display: flex;    
 }
 #main #lateral .menu-lateral{  
-    height: 320px;  
+    max-height: 23vw;  
     background-color: rgb(255, 255, 255);
-    padding: 30px 30px;
-    margin: 0 auto;
+    padding: 2vw 30px;
+    margin: 0 auto 0 20px;
     border: 1px solid rgba(0, 0, 0, 0.116);
 }
 #main #lateral .menu-lateral img{    
-    height: 250px;
+    /* height: 250px; */
+    /* max-height: 18.3vw; */
+    max-width: 15.7vw;
+
 }
 #main .titulo{
     color: #507B9B;
