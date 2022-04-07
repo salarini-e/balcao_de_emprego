@@ -25,6 +25,7 @@ def cadastrar_vaga(request):
         if form.is_valid():
             form.save()
             context={
+                'tipo_cadastro': 'Cadastrar',
                 'form': CadastroVagasForm(initial={'ativo': True,'user':request.user}),
                 'hidden': ['user', 'ativo'],
                 'success': [True, 'Vaga cadastrada com sucesso!']
