@@ -35,7 +35,7 @@ class Vaga_Emprego(models.Model):
     quantidadeVagas=models.IntegerField(blank=False, null=False, verbose_name='Quantidade de vagas')
     vaga=models.CharField(max_length=60, blank=False, null=False)
     empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
-    cnpj=models.CharField(max_length=60, blank=False, null=False, verbose_name='CNPJ', validators=[validate_CNPJ])
+    # cnpj=models.CharField(max_length=60, blank=False, null=False, verbose_name='CNPJ', validators=[validate_CNPJ])
     endereco=models.CharField(max_length=60, blank=False, null=False, verbose_name='Endereço')
     telefone=models.CharField(max_length=11, blank=False, null=False)
     escolaridade=models.ForeignKey(Escolaridade, on_delete=models.CASCADE)
