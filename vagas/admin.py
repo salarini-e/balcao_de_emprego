@@ -6,3 +6,5 @@ class VagasAdmin(admin.ModelAdmin):
     list_filter = ['empresa']    
 
 admin.site.register(Vaga_Emprego, VagasAdmin)
+admin.site.register(Empresa)
+admin.site.register(Escolaridade)
