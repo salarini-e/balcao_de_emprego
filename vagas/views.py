@@ -86,8 +86,16 @@ def cadastrar_escolaridade(request):
 @login_required
 def cadastrar_vagaOfertada(request):
     if request.method=='POST':        
-        form=CadastroVagasForm(request.POST)   
-        if form.is_valid():
+        gambiarra={}     
+        for item in request.POST:
+            if item=='vaga':
+                gambiarra[item]=Vaga.objects.get(nome=request.POST[item]).id
+            elif item=='empresa':
+                gambiarra[item]=Empresa.objects.get(nome=request.POST[item]).id
+            else:
+                gambiarra[item]=request.POST[item]
+        form=CadastroVagasForm(gambiarra)             
+        if form.is_valid():                  
             form.save()
             context={
                 'tipo_cadastro': 'Cadastrar',
