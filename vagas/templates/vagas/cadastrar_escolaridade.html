@@ -16,9 +16,9 @@
 <div class="row">
     <div class="col d-flex">
         
-      <h2 class="text-start text-uppercase mb-4">{{ tipo_cadastro }} VAGA</h2>
+      <h2 class="text-start text-uppercase mb-4">{{ tipo_cadastro }} ESCOLARIDADE</h2>
       {% if request.user.is_staff %}
-      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:listar_vagas' %}">VAGAS</a></span>
+      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:vagas' %}">ESCOLARIDADES</a></span>
       {% endif %}
     </div>
   </div>

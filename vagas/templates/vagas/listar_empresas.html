@@ -1,0 +1,65 @@
+{% extends 'base_site.html' %}
+{% load static %}
+{% block title %}Empresas cadastradas{% endblock %}
+{% block css %}
+{{block.super}}
+{% endblock%}
+{% block main_conteudo %}
+<div class="col">
+    <!-- <h2 class="text-start">VAGAS DISPONÍVEIS</h2> -->
+    <div class="row">
+      <div class="col d-flex">
+        <h2 class="text-start">EMPRESAS CADASTRADAS</h2>
+        {% if request.user.is_staff %}
+        <span class="ms-auto"><a class="btn btn-btfl" href="{% url 'vagas:cadastrar_empresa' %}">CADASTRAR</a></span>
+        {% endif %}
+      </div>
+    </div>
+    <table class="table table-hover mt-4">
+      <thead>
+          <tr> 
+              {% if user.is_authenticated %}
+              <th></th>
+              {% endif %}
+              <th scope="col">Empresa</th>
+              <th scope="col">CNPJ</th>
+              <!-- <th scope="col">Empresa</th>
+              <th scope="col">Vagas</th> -->
+              <th scope="col">Telefone</th>
+              <th scope="col">N. Cargos Disponíveis</th>                            
+            </tr>
+          </thead>
+          <tbody>
+          {% for empresa in empresas %}        
+          <tr onpointerover="showEditIcon(editIcon_1532{{empresa.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{empresa.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:empresas' %}')"{% endif %}>
+            {% if user.is_authenticated %}
+              <td style="vertical-align: middle;"><img id="editIcon_1532{{empresa.id}}d1sa56" style="height: 18px;" src="{% static 'images/edit-icon.png' %}" alt=""></td>     
+              {% endif %}
+              <td scope="row">{{empresa.nome}}</td>
+              <td>{{empresa.cnpj}}</td>            
+              <!-- <td>{{empresa.empresa}}</td>
+              <td>{{empresa.quantidadeempresas}}</td> -->
+              <td>...</td>      
+              <td>...</td>                     
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+    <style>
+      td img{
+        visibility: hidden;
+      }
+      table{
+        font-size:  0.9em;
+      }
+    </style>
+    <script>
+      function showEditIcon(id){
+        id.style.visibility='visible'              
+      }
+      function hiddenEditIcon(id){
+        id.style.visibility='hidden'              
+      }
+    </script>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+#main{
+    padding-bottom: 50px;
+}
+#main #lateral{
+    padding-top: 30px;
+    display: flex;    
+}
+#main #lateral .menu-lateral{  
+    max-height: 23vw;  
+    background-color: rgb(255, 255, 255);
+    padding: 2vw 30px;
+    margin: 0 auto 0 20px;
+    border: 1px solid rgba(0, 0, 0, 0.116);
+}
+#main #lateral .menu-lateral img{    
+    /* height: 250px; */
+    /* max-height: 18.3vw; */
+    max-width: 15.7vw;
+
+}
+#main .titulo{
+    color: #507B9B;
+    background-color: rgba(128, 128, 128, 0.13);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 4rem;
+}
+
+#main #conteudo{    
+    padding-top: 30px ;
+    padding-right: 40px;        
+}
+#main #conteudo .conteudo{
+    padding: 40px 20px;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(0, 0, 0, 0.116);
+}
+
+#main #conteudo .conteudo #vagas_destaque{
+    text-align: start;
+    padding: 50px 50px 50px 50px;
+}
+#main #conteudo .conteudo #vagas_destaque table{
+    text-align: center;
+}
+

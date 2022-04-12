@@ -7,3 +7,21 @@ class CadastroVagasForm(ModelForm):
         model = Vaga_Emprego
         widgets = {'user': forms.HiddenInput()}
         exclude = ['dt_inclusao']
+
+class Form_Empresa(ModelForm):    
+    class Meta:
+        model = Empresa
+        widgets = {'user': forms.HiddenInput()}
+        exclude = ['dt_inclusao']
+
+class Form_Vaga(ModelForm):    
+    class Meta:
+        model = Vaga
+        widgets = {'user': forms.HiddenInput()}
+        exclude = ['dt_inclusao']
+
+class Form_Escolaridade(ModelForm):    
+    class Meta:
+        model = Escolaridade
+        widgets = {'user': forms.HiddenInput()}
+        exclude = ['dt_inclusao']

@@ -5,31 +5,31 @@
 {% endblock%}
 {% block main_conteudo %}
 {% load widget_tweaks %}   
-{% load bootstrap5 %} 
+{% load bootstrap5 %}  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 {% if success.0 %}
 <div class="row px-4 mb-3">
     <div class="col d-flex bg-success py-2">
         <p class="m-auto text-white">{{success.1}}</p>
     </div>
 </div>
-{% endif %}                
+{% endif %}                  
 <div class="row">
     <div class="col d-flex">
-        
-      <h2 class="text-start text-uppercase mb-4">{{ tipo_cadastro }} VAGA</h2>
-      {% if request.user.is_staff %}
-      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:listar_vagas' %}">VAGAS</a></span>
-      {% endif %}
+      <h2 class="text-start text-uppercase">{{ tipo_cadastro }} VAGA OFERTADA</h2>
+      
+      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:vagas' %}">Cad. em Lote</a></span>
+      <span class="ms-2"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:vagas' %}">Vagas Ofertadas</a></span>
+      
     </div>
   </div>
 <form id="form_cadastro_vaga" method="post" class="form w-100 text-start">
     <div class="row">
         <div class="col px-5">
-           
             {% csrf_token %}
             {% for f in form %}                
-            {% if not f.is_hidden %}
-                <label class="text-uppercase" for="id_{{f.name}}">{{f.label}}:</label>        
+            {% if not f.name in hidden %}
+                <label class="text-uppercase" for="id_{{f.name}}">{{f.label}}:</label>
             {% endif %}
             {% if f.errors %}
                 {{f|add_class:'form-control  my-2 is-invalid'}}
@@ -38,6 +38,13 @@
                 {{f|add_class:'form-check-input my-2'|attr:'type:checkbox'|attr:'role=switch'|attr:"onclick=destacar()"}}
                 <span id="span_destaque">{% if f.value %}Sim, destacar.{% else %}Não destacar.{% endif %}</span>
             </div>
+            {% elif f.name == 'vaga' %}
+            <input name="vaga" autocomplete="off" id="id_vaga" onkeyup="searchVaga(this)" type="text" class="form-control bg-light" value="{{vaga}}">                
+            <span id="search_vaga_result"></span>
+
+            {% elif f.name == 'empresa' %}
+            <input name="empresa" autocomplete="off" id="id_empresa" onkeyup="searchEmpresa(this)" type="text" class="form-control bg-light" value="{{empresa}}">                
+            <span id="search_empresa_result"></span>            
             {% else %}
                 {{f|add_class:'form-control bg-light my-2'}}
             {% endif  %}
@@ -58,7 +65,7 @@
         }
         #form_cadastro_vaga button:hover{
             background-color: #329787 !important;
-            border-color: #329787
+            border-color: #329787;
             color: white !important;
         }
         #form_cadastro button, .btn-primary{
@@ -98,6 +105,52 @@
         }
     }
 </script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function searchVaga(e){        
+        if (3<=String(e.value).length){
+            // console.log('buscando '+e.value)
+            getVaga(e.value)
+        }        
+    }    
+    function searchEmpresa(e){        
+        if (3<=String(e.value).length){
+            // console.log('buscando '+e.value)
+            getEmpresa(e.value)
+        }        
+    }    
+    function getEmpresa(value){
+        var url = '/get_empresa/';  
+        $.ajax({ 
+            url: url,
+            data: {
+                'empresa': value,
+            },
+            success: function(data) {                               
+                $("#search_empresa_result").html(data);
+            }
+        });                
+    };
+    function getVaga(value){
+        var url = '/get_vaga/';         
+        $.ajax({ 
+            url: url,
+            data: {
+                'vaga': value,
+            },
+            success: function(data) {                               
+                $("#search_vaga_result").html(data);
+            }
+        });                
+    };
+    function selectThisVaga(e){
+        document.getElementById('id_vaga').value=e.value
+        document.getElementById('search_vaga_result').innerHTML=''
+    }
+    function selectThisEmpresa(e){
+        document.getElementById('id_empresa').value=e.value
+        document.getElementById('search_empresa_result').innerHTML=''
+    }
+</script>
 
 {% endblock %}

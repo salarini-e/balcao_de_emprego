@@ -1,0 +1,40 @@
+main{
+    display: flex;
+    flex-wrap: wrap;
+}
+main img{
+    margin: auto;
+    height:250px;
+}
+.container{
+    max-width: 400px;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+.ml-auto{
+    margin-left: auto;
+}
+input{
+    border-radius: 0 !important;
+    color: #329787;
+}
+ .btn{
+     border-radius: 0;
+ }
+.marcar{
+    box-shadow:  4px 4px 2px #507b9ba9;
+    background-color: #329787;
+    color: white;  
+}
+.marcar:hover{
+    color: white;
+    padding: 10px 18px;
+    box-shadow:  4px 4px 2px #507b9bd2;
+}
+.marcar:focus{
+    padding: 8px 16px;
+    color: white;
+    box-shadow:  4px 4px 2px #507b9b;
+}
+body{
+    background-color: white;
+}

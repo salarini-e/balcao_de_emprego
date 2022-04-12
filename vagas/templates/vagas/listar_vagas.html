@@ -1,6 +1,6 @@
 {% extends 'base_site.html' %}
 {% load static %}
-{% block title %}Vagas Ofertadas{% endblock %}
+{% block title %}vagas cadastradas{% endblock %}
 {% block css %}
 {{block.super}}
 {% endblock%}
@@ -9,9 +9,9 @@
     <!-- <h2 class="text-start">VAGAS DISPONÍVEIS</h2> -->
     <div class="row">
       <div class="col d-flex">
-        <h2 class="text-start">VAGAS OFERTADAS</h2>
+        <h2 class="text-start">VAGAS CADASTRADAS</h2>
         {% if request.user.is_staff %}
-        <span class="ms-auto"><a class="btn btn-btfl" href="{% url 'vagas:cadastrar' %}">CADASTRAR</a></span>
+        <span class="ms-auto"><a class="btn btn-btfl" href="{% url 'vagas:cadastrar_vaga' %}">CADASTRAR</a></span>
         {% endif %}
       </div>
     </div>
@@ -19,28 +19,18 @@
       <thead>
           <tr> 
               {% if user.is_authenticated %}
-              <th></th>
+              <th class="col-1"></th>
               {% endif %}
-              <th scope="col">Vagas</th>
-              <th scope="col">Cargo</th>
-              <!-- <th scope="col">Empresa</th>
-              <th scope="col">Vagas</th> -->
-              <th scope="col">Experiência</th>
-              <th scope="col">Escolaridade</th>                            
+              <th scope="col">Vaga</th>                         
             </tr>
           </thead>
           <tbody>
           {% for vaga in vagas %}        
-          <tr onpointerover="showEditIcon(editIcon_1532{{vaga.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{vaga.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:alterar_vaga' vaga.id %}')"{% endif %}>
+          <tr onpointerover="showEditIcon(editIcon_1532{{vaga.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{vaga.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:listar_vagas' %}')"{% endif %}>
             {% if user.is_authenticated %}
               <td style="vertical-align: middle;"><img id="editIcon_1532{{vaga.id}}d1sa56" style="height: 18px;" src="{% static 'images/edit-icon.png' %}" alt=""></td>     
               {% endif %}
-              <td scope="row">{{vaga.quantidadeVagas}}</td>
-              <td>{{vaga.vaga}}</td>            
-              <!-- <td>{{vaga.empresa}}</td>
-              <td>{{vaga.quantidadeVagas}}</td> -->
-              <td>{{vaga.experiencia}}</td>      
-              <td>{{vaga.escolaridade}}</td>                     
+              <td scope="row">{{vaga.nome}}</td>                 
             </tr>
           {% endfor %}
       </tbody>

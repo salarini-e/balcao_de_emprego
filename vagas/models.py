@@ -5,17 +5,27 @@ from .validations import validate_CNPJ
 # Create your models here.
 
 class Escolaridade(models.Model):
-    nome=models.CharField(max_length=150)
+    nome=models.CharField(max_length=150, verbose_name='Nome da escolaridade')
+    user=models.ForeignKey(User, on_delete=models.PROTECT)                    
     dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')
 
     def __str__(self):
         return '%s' % (self.nome)
 
 class Empresa(models.Model):
-    nome=models.CharField(max_length=150)
-    cnpj=models.CharField(max_length=14)
+    nome=models.CharField(max_length=150, verbose_name='Nome da empresa')
+    cnpj=models.CharField(max_length=14, verbose_name='CNPJ da empresa')
+    user=models.ForeignKey(User, on_delete=models.PROTECT)                    
     dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')
     
+    def __str__(self):
+        return '%s' % (self.nome)
+
+class Vaga(models.Model):
+    nome=models.CharField(max_length=100, verbose_name='Nome da vaga')
+    user=models.ForeignKey(User, on_delete=models.PROTECT)                    
+    dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')
+
     def __str__(self):
         return '%s' % (self.nome)
 
@@ -33,7 +43,7 @@ class Vaga_Emprego(models.Model):
     ativo=models.BooleanField(default=True)    
     user=models.ForeignKey(User, on_delete=models.PROTECT)                    
     quantidadeVagas=models.IntegerField(blank=False, null=False, verbose_name='Quantidade de vagas')
-    vaga=models.CharField(max_length=60, blank=False, null=False)
+    vaga=models.ForeignKey(Vaga, on_delete=models.CASCADE)
     empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
     # cnpj=models.CharField(max_length=60, blank=False, null=False, verbose_name='CNPJ', validators=[validate_CNPJ])
     endereco=models.CharField(max_length=60, blank=False, null=False, verbose_name='Endereço')

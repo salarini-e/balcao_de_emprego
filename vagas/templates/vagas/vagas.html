@@ -4,7 +4,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">Vagas</th>
             <th scope="col">Cargo</th>
             <th scope="col">Empresa</th>
             <th scope="col">Vagas</th>
@@ -16,7 +16,7 @@
         <tbody>
         {% for vaga in vagas %}        
         <tr style="background-color: rgba(230, 230, 230, 0.274);"></tr>
-            <th scope="row">{{forloop.counter}}</th>
+            <th scope="row">{{vagas.quantidadeVagas}}</th>
             <td>{{vaga.vaga}}</td>            
             <td>{{vaga.empresa}}</td>
             <td>{{vaga.quantidadeVagas}}</td>

@@ -1,4 +1,5 @@
 # PARA AS VIEWS
+from multiprocessing import context
 from django.shortcuts import render, redirect
 # AUTH
 from django.contrib.auth.decorators import login_required
@@ -15,13 +16,77 @@ def home(request):
     context={
         'vagas': vagas,
         'qnt_vagas': qnt_vagas,
+        'qnt_destaque': len(vagas)
     }
     return render(request, 'vagas/index.html', context)
 
 @login_required
+def cadastrar_empresa(request):
+    if request.method=='POST':        
+        form=Form_Empresa(request.POST)                
+        if form.is_valid():
+            form.save()
+            context={
+                'tipo_cadastro': 'Cadastrar',
+                'form': Form_Empresa(initial={'user':request.user}),
+                'hidden': ['user', 'ativo'],
+                'success': [True, 'Vaga cadastrada com sucesso!']
+            }
+            return render(request, 'vagas/cadastrar_empresa.html', context)  
+    else:
+        form=Form_Empresa(initial={'user':request.user})
+    context={
+        'form': form,
+        'tipo_cadastro': 'Cadastrar',
+    }
+    return render(request, 'vagas/cadastrar_empresa.html', context)  
+
+@login_required
 def cadastrar_vaga(request):
     if request.method=='POST':        
-        form=CadastroVagasForm(request.POST)                
+        form=Form_Vaga(request.POST)                
+        if form.is_valid():
+            form.save()
+            context={
+                'tipo_cadastro': 'Cadastrar',
+                'form': Form_Vaga(initial={'user':request.user}),
+                'hidden': ['user', 'ativo'],
+                'success': [True, 'Vaga cadastrada com sucesso!']
+            }
+            return render(request, 'vagas/cadastrar_vaga.html', context)  
+    else:
+        form=Form_Vaga(initial={'user':request.user})
+    context={
+        'form': form,
+        'tipo_cadastro': 'Cadastrar',
+    }
+    return render(request, 'vagas/cadastrar_vaga.html', context) 
+
+@login_required
+def cadastrar_escolaridade(request):
+    if request.method=='POST':        
+        form=Form_Escolaridade(request.POST)                
+        if form.is_valid():
+            form.save()
+            context={
+                'tipo_cadastro': 'Cadastrar',
+                'form': Form_Escolaridade(initial={'user':request.user}),
+                'hidden': ['user', 'ativo'],
+                'success': [True, 'Vaga cadastrada com sucesso!']
+            }
+            return render(request, 'vagas/cadastrar_escolaridade.html', context)  
+    else:
+        form=Form_Escolaridade(initial={'user':request.user})
+    context={
+        'form': form,
+        'tipo_cadastro': 'Cadastrar',
+    }
+    return render(request, 'vagas/cadastrar_escolaridade.html', context) 
+
+@login_required
+def cadastrar_vagaOfertada(request):
+    if request.method=='POST':        
+        form=CadastroVagasForm(request.POST)   
         if form.is_valid():
             form.save()
             context={
@@ -30,7 +95,7 @@ def cadastrar_vaga(request):
                 'hidden': ['user', 'ativo'],
                 'success': [True, 'Vaga cadastrada com sucesso!']
             }
-            return render(request, 'vagas/cadastrar_vaga.html', context)  
+            return render(request, 'vagas/cadastrar_vagaOfertada.html', context)  
     else:
         form=CadastroVagasForm(initial={'ativo': True,'user':request.user})
     context={
@@ -38,15 +103,49 @@ def cadastrar_vaga(request):
         'form': form,
         'hidden': ['user', 'ativo']
     }
-    return render(request, 'vagas/cadastrar_vaga.html', context)
+    return render(request, 'vagas/cadastrar_vagaOfertada.html', context)
+
+def get_empresa(request):
+    try:
+        # empresas=Empresa.objects.filter(nome__startswith=request.GET.get('nome')).order_by('nome')
+        empresas=Empresa.objects.filter(nome__icontains=request.GET.get('empresa')).order_by('nome')
+    except Exception as E:
+        print(E)
+        empresas=None
+    context={
+        'results': empresas,
+    }
+    return render(request, 'vagas/resultEmpresaSearchs.html', context)
+
+
+def get_vaga(request):
+    try:
+        # empresas=Empresa.objects.filter(nome__startswith=request.GET.get('nome')).order_by('nome')
+        vagas=Vaga.objects.filter(nome__icontains=request.GET.get('vaga')).order_by('nome')
+    except Exception as E:
+        print(E)
+        vagas=None
+    context={
+        'results': vagas,
+    }
+    return render(request, 'vagas/resultVagaSearchs.html', context)
 
 @login_required
 def alterar_vaga(request, id):
-    if request.method=='POST':           
-        form=CadastroVagasForm(request.POST)                
+    if request.method=='POST':    
+        gambiarra={}     
+        for item in request.POST:
+            if item=='vaga':
+                gambiarra[item]=Vaga.objects.get(nome=request.POST[item]).id
+            elif item=='empresa':
+                gambiarra[item]=Empresa.objects.get(nome=request.POST[item]).id
+            else:
+                gambiarra[item]=request.POST[item]
+        form=CadastroVagasForm(gambiarra)    
+        vaga=Vaga_Emprego.objects.get(id=id)         
         if form.is_valid():
-            vaga=Vaga_Emprego.objects.get(id=id)     
-            form=CadastroVagasForm(request.POST, instance=vaga)  
+                
+            form=CadastroVagasForm(gambiarra, instance=vaga)  
             form.save()
             return redirect('vagas:vagas')
     else:        
@@ -56,15 +155,29 @@ def alterar_vaga(request, id):
     context={
         'tipo_cadastro': 'Alterar',
         'form': form,
-        'hidden': ['user', 'ativo']
+        'hidden': ['user', 'ativo'],
+        'vaga': vaga.vaga.nome,
+        'empresa': vaga.empresa.nome
     }
-    return render(request, 'vagas/cadastrar_vaga.html', context)
+    return render(request, 'vagas/cadastrar_vagaOfertada.html', context)
 
 def vagas(request):
     context={
         'vagas': Vaga_Emprego.objects.filter(ativo=True)
     }
     return render(request, 'vagas/vagas_disponiveis.html', context)
+
+def empresas(request):
+    context={
+        'empresas': Empresa.objects.all()
+    }
+    return render(request, 'vagas/listar_empresas.html', context)
+
+def listar_vagas(request):
+    context={
+        'vagas': Vaga.objects.all()
+    }
+    return render(request, 'vagas/listar_vagas.html', context)
 
 def vagas_table(request):
     context={

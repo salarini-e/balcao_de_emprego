@@ -8,3 +8,4 @@ class VagasAdmin(admin.ModelAdmin):
 admin.site.register(Vaga_Emprego, VagasAdmin)
 admin.site.register(Empresa)
 admin.site.register(Escolaridade)
+admin.site.register(Vaga)

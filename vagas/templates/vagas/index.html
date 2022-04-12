@@ -13,13 +13,13 @@
         <h1 class="px-5">VER TODAS AS VAGAS <span class="mobile_hidden">DISPONÍVEIS</span></h1>
     </a>
     <div id="vagas_destaque">
-        {% if qnt_vagas != 0 %}
+        {% if qnt_destaque != 0 %}
         <h3>VAGAS EM DESTAQUE</h3>
         <table class="table table-hover">
             <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Cargo</th>
+                <tr>                    
+                    <th scope="col">Vagas</th>
+                    <th scope="col">Cargo</th>                    
                     <!-- <th scope="col">Empresa</th>
                     <th scope="col">Vagas</th> -->
                     <th scope="col">Experiência</th>
@@ -29,9 +29,9 @@
                 </thead>
                 <tbody>
                 {% for vaga in vagas %}        
-                <tr>
-                    <th scope="row">{{forloop.counter}}</th>
-                    <td>{{vaga.vaga}}</td>            
+                <tr>                    
+                    <td scope="row">{{vaga.quantidadeVagas}}</td>
+                    <td>{{vaga.vaga}}</td>                                
                     <!-- <td>{{vaga.empresa}}</td>
                     <td>{{vaga.quantidadeVagas}}</td> -->
                     <td>{{vaga.experiencia}}</td>      
