@@ -1,5 +1,5 @@
 {% extends 'base_site.html' %}
-{% block title %}{{tipo_cadastro}} Vaga{% endblock %}
+{% block title %}{{tipo_cadastro}} Vaga em Lote{% endblock %}
 {% block css %}
 {{block.super}}
 {% endblock%}
@@ -16,66 +16,32 @@
 {% endif %}                  
 <div class="row">
     <div class="col d-flex">
-      <h2 class="text-start text-uppercase">{{ tipo_cadastro }} VAGA OFERTADA</h2>
-      {% if tipo_cadastro == 'alterar' %}
-      <span class="ms-auto"><a class="btn btn-btfl bg-danger" href="{% url 'vagas:remover_vaga' id %}">Remover</a></span>
-      {% endif %}      
-      {% if tipo_cadastro == '' %}
-      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="#">Encaminhar</a></span>      
-      {% endif %}
-      <span class="{% if tipo_cadastro == 'cadastrar' %}ms-auto{% else %}ms-2{% endif %}"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:vagas' %}">Vagas Ofertadas</a></span>
-      {% if tipo_cadastro == '' %}
-      <span class="ms-2"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:alterar_vaga' id %}"><i class="fas fa-edit"></i></a></span>
-      {% endif %}
-      {% if tipo_cadastro == 'alterar' %}
-      <span class="ms-2"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:visualizar_vaga' id %}">Voltar</a></span>
-      {% endif %}
+      <h2 class="text-start text-uppercase">{{ tipo_cadastro }} VAGAS P/ UMA EMPRESA</h2>
+      
+      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:cadastrar' %}">Voltar</a></span>
+      <span class="ms-2"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:vagas' %}">Vagas Ofertadas</a></span>
       
     </div>
   </div>
-<form id="form_cadastro_vaga" {% if tipo_cadastro != '' %}method="post"{% endif %} class="form w-100 text-start">
+<form id="form_cadastro_vaga" method="post" class="form w-100 text-start">
     <div class="row">
         <div class="col px-5">
             {% csrf_token %}
             {% for f in form %}                
-            {% if not f.name in hidden %}
-            
-                <label class="text-uppercase" for="id_{{f.name}}">{{f.label}}:</label>
-            
-            {% endif %}
-            {% if f.errors %}
-                {{f|add_class:'form-control  my-2 is-invalid'}}
-            {% elif f.name == 'destaque' %}
-            {% if tipo_cadastro != '' %}                                                    
-                <div class="form-check form-switch" style="margin: 0; padding-left: 0;">  
-                {{f|add_class:'form-check-input my-2'|attr:'type:checkbox'|attr:'role=switch'|attr:"onclick=destacar()"}}
-                <span id="span_destaque">{% if f.value %}Sim, destacar.{% else %}Não destacar.{% endif %}</span>             
-            </div>
-            {% endif %}
-            {% elif f.name == 'cargo' %}
-            <input name="cargo"  {% if tipo_cadastro == '' %}disabled{% endif %}   autocomplete="off" id="id_vaga" onkeyup="searchVaga(this)" type="text" class="form-control bg-light mb-2" value="{{cargo}}">                
-            <span id="search_vaga_result"></span>
-
-            {% elif f.name == 'empresa' %}
-            <input name="empresa" {% if tipo_cadastro == '' %}disabled{% endif %} autocomplete="off" id="id_empresa" onkeyup="searchEmpresa(this)" type="text" class="form-control bg-light mb-2" value="{{empresa}}">                
-            <span id="search_empresa_result"></span>        
-                
-            {% else %}
-                {% if tipo_cadastro == '' %}
-                {{f|add_class:'form-control bg-light my-2'|attr:'disabled'}}
-                {% else %}
-                {{f|add_class:'form-control bg-light my-2'}}
-                {% endif %}
-            {% endif  %}
+          
+            {% if f.name == 'empresa' %}
+            <label class="text-uppercase" for="id_{{f.name}}">Selecione a empresa:</label>
+            <input name="empresa" autocomplete="off" id="id_empresa" onkeyup="searchEmpresa(this)" type="text" class="form-control bg-light" value="{{empresa}}">                
+            <span id="search_empresa_result"></span>            
             <div class="invalid-feedback mb-2">
                 {{f.errors}}
             </div>
-            {% endfor %}
-            {% if tipo_cadastro != '' %}
-            <button type="submit" class="btn btn-primary text-white w-100 mt-3">
-            {{tipo_cadastro}}
-            </button>
             {% endif %}
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary text-white w-100 mt-3">
+            Prosseguir
+            </button>
 
         </div>      
     </div>    

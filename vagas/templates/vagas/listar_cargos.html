@@ -11,7 +11,7 @@
       <div class="col d-flex">
         <h2 class="text-start">VAGAS CADASTRADAS</h2>
         {% if request.user.is_staff %}
-        <span class="ms-auto"><a class="btn btn-btfl" href="{% url 'vagas:cadastrar_vaga' %}">CADASTRAR</a></span>
+        <span class="ms-auto"><a class="btn btn-btfl" href="{% url 'vagas:cadastrar_cargo' %}">CADASTRAR</a></span>
         {% endif %}
       </div>
     </div>
@@ -26,7 +26,7 @@
           </thead>
           <tbody>
           {% for vaga in vagas %}        
-          <tr onpointerover="showEditIcon(editIcon_1532{{vaga.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{vaga.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:listar_vagas' %}')"{% endif %}>
+          <tr onpointerover="showEditIcon(editIcon_1532{{vaga.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{vaga.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:alterar_cargo' vaga.id %}')"{% endif %}>
             {% if user.is_authenticated %}
               <td style="vertical-align: middle;"><img id="editIcon_1532{{vaga.id}}d1sa56" style="height: 18px;" src="{% static 'images/edit-icon.png' %}" alt=""></td>     
               {% endif %}

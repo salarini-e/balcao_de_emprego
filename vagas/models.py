@@ -1,11 +1,11 @@
-from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import User
 from .validations import validate_CNPJ
 # Create your models here.
 
 class Escolaridade(models.Model):
-    nome=models.CharField(max_length=150, verbose_name='Nome da escolaridade')
+    
+    nome=models.CharField(max_length=150, verbose_name='Nome da escolaridade', unique=True)
     user=models.ForeignKey(User, on_delete=models.PROTECT)                    
     dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')
 
@@ -13,16 +13,34 @@ class Escolaridade(models.Model):
         return '%s' % (self.nome)
 
 class Empresa(models.Model):
-    nome=models.CharField(max_length=150, verbose_name='Nome da empresa')
-    cnpj=models.CharField(max_length=14, verbose_name='CNPJ da empresa')
+
+    OCULTAR_CHOICES=(
+                            (True, 'Ocultar informações da empresa ao encaminhar'),
+                            (False, 'Exibir informações da empresa ao encaminhar')
+    )
+
+    FORMA_CONTATO_CHOICES=(
+                            ('T', 'TELEFONE'),
+                            ('E', 'EMAIL'),
+                            ('P', 'PRESENCIAL')
+    )
+
+    nome=models.CharField(max_length=150, verbose_name='Nome da empresa', unique=True)
+    cnpj=models.CharField(max_length=14, verbose_name='CNPJ da empresa', unique=True)
+    endereco=models.CharField(max_length=60, blank=False, null=False, verbose_name='Endereço')
+    telefone=models.CharField(max_length=11, blank=False, null=False, verbose_name='Telefone')
+    email=models.EmailField(max_length=254)
+    formaDeContato=models.CharField(max_length=1, choices=FORMA_CONTATO_CHOICES, verbose_name='Forma de contato')
+    ocultar=models.BooleanField(default=True, verbose_name='Informações da empresa', choices=OCULTAR_CHOICES)
     user=models.ForeignKey(User, on_delete=models.PROTECT)                    
     dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')
     
     def __str__(self):
         return '%s' % (self.nome)
 
-class Vaga(models.Model):
-    nome=models.CharField(max_length=100, verbose_name='Nome da vaga')
+class Cargo(models.Model):
+
+    nome=models.CharField(max_length=100, verbose_name='Nome da vaga', unique=True)
     user=models.ForeignKey(User, on_delete=models.PROTECT)                    
     dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')
 
@@ -30,7 +48,7 @@ class Vaga(models.Model):
         return '%s' % (self.nome)
 
 class Vaga_Emprego(models.Model):
-    
+
     class Meta:
         verbose_name_plural = "Vagas de Emprego"
         verbose_name = "Vaga de Emprego"
@@ -40,19 +58,15 @@ class Vaga_Emprego(models.Model):
                             ('Sim', 'Sim'),
                             ('Não', 'Não')
     )
-    ativo=models.BooleanField(default=True)    
-    user=models.ForeignKey(User, on_delete=models.PROTECT)                    
+    
+    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)        
+    cargo=models.ForeignKey(Cargo, on_delete=models.CASCADE)
     quantidadeVagas=models.IntegerField(blank=False, null=False, verbose_name='Quantidade de vagas')
-    vaga=models.ForeignKey(Vaga, on_delete=models.CASCADE)
-    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
-    # cnpj=models.CharField(max_length=60, blank=False, null=False, verbose_name='CNPJ', validators=[validate_CNPJ])
-    endereco=models.CharField(max_length=60, blank=False, null=False, verbose_name='Endereço')
-    telefone=models.CharField(max_length=11, blank=False, null=False)
     escolaridade=models.ForeignKey(Escolaridade, on_delete=models.CASCADE)
-    experiencia=models.CharField(max_length=3, choices=EXPERIENCIA_CHOICES, verbose_name='Experiência')
-    formaDeContato=models.CharField(max_length=60, blank=False, null=False, verbose_name='Forma de contato')
+    experiencia=models.CharField(max_length=3, choices=EXPERIENCIA_CHOICES, verbose_name='Experiência')    
     destaque=models.BooleanField(default=False)
+    user=models.ForeignKey(User, on_delete=models.PROTECT)                    
     dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')
-
+    ativo=models.BooleanField(default=True)        
     def __str__(self):
         return '%s - %s' % (self.empresa, self.vaga)

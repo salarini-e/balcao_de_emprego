@@ -31,7 +31,7 @@
           </thead>
           <tbody>
           {% for empresa in empresas %}        
-          <tr onpointerover="showEditIcon(editIcon_1532{{empresa.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{empresa.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:empresas' %}')"{% endif %}>
+          <tr onpointerover="showEditIcon(editIcon_1532{{empresa.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{empresa.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:alterar_empresa' empresa.id %}')"{% endif %}>
             {% if user.is_authenticated %}
               <td style="vertical-align: middle;"><img id="editIcon_1532{{empresa.id}}d1sa56" style="height: 18px;" src="{% static 'images/edit-icon.png' %}" alt=""></td>     
               {% endif %}
@@ -39,7 +39,7 @@
               <td>{{empresa.cnpj}}</td>            
               <!-- <td>{{empresa.empresa}}</td>
               <td>{{empresa.quantidadeempresas}}</td> -->
-              <td>...</td>      
+              <td>{{empresa.telefone}}</td>      
               <td>...</td>                     
             </tr>
           {% endfor %}

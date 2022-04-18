@@ -31,12 +31,12 @@
           </thead>
           <tbody>
           {% for vaga in vagas %}        
-          <tr onpointerover="showEditIcon(editIcon_1532{{vaga.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{vaga.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:alterar_vaga' vaga.id %}')"{% endif %}>
+          <tr onpointerover="showEditIcon(editIcon_1532{{vaga.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{vaga.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:visualizar_vaga' vaga.id %}')"{% endif %}>
             {% if user.is_authenticated %}
               <td style="vertical-align: middle;"><img id="editIcon_1532{{vaga.id}}d1sa56" style="height: 18px;" src="{% static 'images/edit-icon.png' %}" alt=""></td>     
               {% endif %}
               <td scope="row">{{vaga.quantidadeVagas}}</td>
-              <td>{{vaga.vaga}}</td>            
+              <td>{{vaga.cargo}}</td>            
               <!-- <td>{{vaga.empresa}}</td>
               <td>{{vaga.quantidadeVagas}}</td> -->
               <td>{{vaga.experiencia}}</td>      

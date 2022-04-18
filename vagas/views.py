@@ -11,12 +11,17 @@ import requests
 
 # VIEWS
 def home(request):    
-    vagas=Vaga_Emprego.objects.filter(destaque=True)
-    qnt_vagas=len(Vaga_Emprego.objects.all())
+    vagas_destaque=Vaga_Emprego.objects.filter(destaque=True)
+    vagas=Vaga_Emprego.objects.filter(ativo=True)
+    qnt_vagas=len(vagas)
+    cont=0
+    for i in vagas:
+        cont+=i.quantidadeVagas
     context={
-        'vagas': vagas,
-        'qnt_vagas': qnt_vagas,
-        'qnt_destaque': len(vagas)
+        'vagas': vagas_destaque,
+        'qnt_cargos': qnt_vagas,
+        'qnt_vagas': cont,
+        'qnt_destaque': len(vagas_destaque)
     }
     return render(request, 'vagas/index.html', context)
 
@@ -42,25 +47,71 @@ def cadastrar_empresa(request):
     return render(request, 'vagas/cadastrar_empresa.html', context)  
 
 @login_required
-def cadastrar_vaga(request):
+def alterar_empresa(request, id):
+    empresa=Empresa.objects.get(id=id)
     if request.method=='POST':        
-        form=Form_Vaga(request.POST)                
+        form=Form_Empresa(request.POST, instance=empresa)                
+        if form.is_valid():
+            form.save()
+            context={
+                'tipo_cadastro': 'Alterar',
+                'form': Form_Empresa(initial={'user':request.user}),
+                'hidden': ['user', 'ativo'],
+                'success': [True, 'Vaga alterada com sucesso!']
+            }
+            return redirect('vagas:empresas')
+    else:
+        
+        form=Form_Empresa(instance=empresa)
+    context={
+        'form': form,
+        'tipo_cadastro': 'Alterar',
+    }
+    return render(request, 'vagas/cadastrar_empresa.html', context)  
+
+@login_required
+def cadastrar_cargo(request):
+    if request.method=='POST':        
+        form=Form_Cargo(request.POST)                
         if form.is_valid():
             form.save()
             context={
                 'tipo_cadastro': 'Cadastrar',
-                'form': Form_Vaga(initial={'user':request.user}),
+                'form': Form_Cargo(initial={'user':request.user}),
                 'hidden': ['user', 'ativo'],
                 'success': [True, 'Vaga cadastrada com sucesso!']
             }
-            return render(request, 'vagas/cadastrar_vaga.html', context)  
+            return render(request, 'vagas/cadastrar_cargo.html', context)  
     else:
-        form=Form_Vaga(initial={'user':request.user})
+        form=Form_Cargo(initial={'user':request.user})
     context={
         'form': form,
         'tipo_cadastro': 'Cadastrar',
     }
-    return render(request, 'vagas/cadastrar_vaga.html', context) 
+    return render(request, 'vagas/cadastrar_cargo.html', context) 
+
+@login_required
+def alterar_cargo(request, id):
+    cargo=Cargo.objects.get(id=id)
+    if request.method=='POST':        
+        form=Form_Cargo(request.POST, instance=cargo)                
+        if form.is_valid():
+            form.save()
+            context={
+                'tipo_cadastro': 'Alterar',
+                'form': Form_Cargo(initial={'user':request.user}),
+                'hidden': ['user', 'ativo'],
+                'success': [True, 'Vaga alterada com sucesso!']
+            }
+            return redirect('vagas:listar_cargos')
+    else:
+        
+        form=Form_Cargo(instance=cargo)
+    context={
+        'form': form,
+        'tipo_cadastro': 'Alterar',
+    }
+    return render(request, 'vagas/cadastrar_escolaridade.html', context)  
 
 @login_required
 def cadastrar_escolaridade(request):
@@ -83,13 +134,37 @@ def cadastrar_escolaridade(request):
     }
     return render(request, 'vagas/cadastrar_escolaridade.html', context) 
 
+
+@login_required
+def alterar_escolaridade(request, id):
+    escolaridade=Escolaridade.objects.get(id=id)
+    if request.method=='POST':        
+        form=Form_Escolaridade(request.POST, instance=escolaridade)                
+        if form.is_valid():
+            form.save()
+            context={
+                'tipo_cadastro': 'Alterar',
+                'form': Form_Escolaridade(initial={'user':request.user}),
+                'hidden': ['user', 'ativo'],
+                'success': [True, 'Vaga alterada com sucesso!']
+            }
+            return redirect('vagas:escolaridades')
+    else:
+        
+        form=Form_Escolaridade(instance=escolaridade)
+    context={
+        'form': form,
+        'tipo_cadastro': 'Alterar',
+    }
+    return render(request, 'vagas/cadastrar_escolaridade.html', context)  
+
 @login_required
 def cadastrar_vagaOfertada(request):
     if request.method=='POST':        
         gambiarra={}     
         for item in request.POST:
-            if item=='vaga':
-                gambiarra[item]=Vaga.objects.get(nome=request.POST[item]).id
+            if item=='cargo':
+                gambiarra[item]=Cargo.objects.get(nome=request.POST[item]).id
             elif item=='empresa':
                 gambiarra[item]=Empresa.objects.get(nome=request.POST[item]).id
             else:
@@ -98,7 +173,7 @@ def cadastrar_vagaOfertada(request):
         if form.is_valid():                  
             form.save()
             context={
-                'tipo_cadastro': 'Cadastrar',
+                'tipo_cadastro': 'cadastrar',
                 'form': CadastroVagasForm(initial={'ativo': True,'user':request.user}),
                 'hidden': ['user', 'ativo'],
                 'success': [True, 'Vaga cadastrada com sucesso!']
@@ -107,11 +182,52 @@ def cadastrar_vagaOfertada(request):
     else:
         form=CadastroVagasForm(initial={'ativo': True,'user':request.user})
     context={
-        'tipo_cadastro': 'Cadastrar',
+        'tipo_cadastro': 'cadastrar',
         'form': form,
         'hidden': ['user', 'ativo']
     }
     return render(request, 'vagas/cadastrar_vagaOfertada.html', context)
+
+@login_required
+def remover_vaga(request, id):
+    if request.method=='POST':        
+        try:
+            vaga=Vaga_Emprego.objects.get(id=request.POST['remover'])
+            vaga.ativo=False
+            vaga.save()
+            return redirect('vagas:vagas')
+        except:
+            pass
+    context={
+        'id': id,
+        'vaga': Vaga_Emprego.objects.get(id=id)
+    }
+    return render(request, 'vagas/remover_vagaOfertada.html', context)
+
+@login_required
+def cadastrar_vaga_emLote(request):
+    if request.method=='POST': 
+        try:
+            empresa=Empresa.objects.get(nome=request.POST['empresa'])
+            success=True
+        except:
+            success=False
+        if success:                        
+            form=CadastroVagasForm(initial={'ativo': True,'user':request.user})
+            context={
+                'empresa': request.POST['empresa'],
+                'tipo_cadastro': 'cadastrar',
+                'form': form,
+                'hidden': ['user', 'ativo']
+            }
+            return render(request, 'vagas/cadastrar_vagas_emLote_2.html', context)
+    form=CadastroVagasForm(initial={'ativo': True,'user':request.user})
+    context={
+        'tipo_cadastro': 'cadastrar',
+        'form': form,
+        'hidden': ['user', 'ativo']
+    }
+    return render(request, 'vagas/cadastrar_vagas_emLote.html', context)
 
 def get_empresa(request):
     try:
@@ -126,25 +242,25 @@ def get_empresa(request):
     return render(request, 'vagas/resultEmpresaSearchs.html', context)
 
 
-def get_vaga(request):
+def get_cargo(request):
     try:
         # empresas=Empresa.objects.filter(nome__startswith=request.GET.get('nome')).order_by('nome')
-        vagas=Vaga.objects.filter(nome__icontains=request.GET.get('vaga')).order_by('nome')
+        cargos=Cargo.objects.filter(nome__icontains=request.GET.get('vaga')).order_by('nome')
     except Exception as E:
         print(E)
-        vagas=None
+        cargos=None
     context={
-        'results': vagas,
+        'results': cargos,
     }
     return render(request, 'vagas/resultVagaSearchs.html', context)
 
 @login_required
-def alterar_vaga(request, id):
+def visualizar_vaga(request, id):
     if request.method=='POST':    
         gambiarra={}     
         for item in request.POST:
             if item=='vaga':
-                gambiarra[item]=Vaga.objects.get(nome=request.POST[item]).id
+                gambiarra[item]=Cargo.objects.get(nome=request.POST[item]).id
             elif item=='empresa':
                 gambiarra[item]=Empresa.objects.get(nome=request.POST[item]).id
             else:
@@ -161,10 +277,43 @@ def alterar_vaga(request, id):
         form=CadastroVagasForm(instance=vaga)
 
     context={
+        'id': id,
+        'tipo_cadastro': '',
+        'form': form,
+        'hidden': ['user', 'ativo', 'destaque'],
+        'cargo': vaga.cargo.nome,
+        'empresa': vaga.empresa.nome
+    }
+    return render(request, 'vagas/cadastrar_vagaOfertada.html', context)
+
+@login_required
+def alterar_vaga(request, id):
+    if request.method=='POST':    
+        gambiarra={}     
+        for item in request.POST:
+            if item=='cargo':
+                gambiarra[item]=Cargo.objects.get(nome=request.POST[item]).id
+            elif item=='empresa':
+                gambiarra[item]=Empresa.objects.get(nome=request.POST[item]).id
+            else:
+                gambiarra[item]=request.POST[item]
+        form=CadastroVagasForm(gambiarra)    
+        vaga=Vaga_Emprego.objects.get(id=id)         
+        if form.is_valid():
+                
+            form=CadastroVagasForm(gambiarra, instance=vaga)  
+            form.save()
+            return redirect('vagas:vagas')
+    else:        
+        vaga=Vaga_Emprego.objects.get(id=id)
+        form=CadastroVagasForm(instance=vaga)
+
+    context={
+        'id': id,
         'tipo_cadastro': 'Alterar',
         'form': form,
         'hidden': ['user', 'ativo'],
-        'vaga': vaga.vaga.nome,
+        'cargo': vaga.cargo.nome,
         'empresa': vaga.empresa.nome
     }
     return render(request, 'vagas/cadastrar_vagaOfertada.html', context)
@@ -181,11 +330,17 @@ def empresas(request):
     }
     return render(request, 'vagas/listar_empresas.html', context)
 
-def listar_vagas(request):
+def escolaridades(request):
     context={
-        'vagas': Vaga.objects.all()
+        'escolaridades': Escolaridade.objects.all()
     }
-    return render(request, 'vagas/listar_vagas.html', context)
+    return render(request, 'vagas/listar_escolaridade.html', context)
+
+def listar_cargos(request):
+    context={
+        'vagas': Cargo.objects.all()
+    }
+    return render(request, 'vagas/listar_cargos.html', context)
 
 def vagas_table(request):
     context={

@@ -1,0 +1,128 @@
+{% extends 'base_site.html' %}
+{% block title %}{{tipo_cadastro}} Vaga{% endblock %}
+{% block css %}
+{{block.super}}
+{% endblock%}
+{% block main_conteudo %}
+{% load widget_tweaks %}   
+{% load bootstrap5 %}  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+{% if success.0 %}
+<div class="row px-4 mb-3">
+    <div class="col d-flex bg-success py-2">
+        <p class="m-auto text-white">{{success.1}}</p>
+    </div>
+</div>
+{% endif %}                  
+<div class="row">
+    <div class="col d-flex">
+      <h2 class="text-start text-uppercase">REMOVER VAGA OFERTADA</h2>
+      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:visualizar_vaga' id %}">Voltar</a></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="remover" value="{{id}}">
+            <h4>Você tem certeza que deseja fazer isso?</h4>
+            <p>{{vaga}}</p>
+            <button class="btn btn-btfl bg-danger mt-3">SIM, REMOVER VAGA</button>
+        </form>
+        
+    </div>
+</div>
+  <style>
+    #form_cadastro_vaga ul, li{
+        list-style: none;
+    }
+    #form_cadastro_vaga button:hover{
+        background-color: #329787 !important;
+        border-color: #329787;
+        color: white !important;
+    }
+    #form_cadastro button, .btn-primary{
+        background-color: #329787 !important;
+        border-color: #329787;
+    }
+    #id_ativo{
+        opacity: 0;
+    }
+    .form-check{
+        display: flex;            
+    }
+    .form-switch span{
+        margin-left: 10px;
+        padding-top: 4px;
+    }
+
+    .form-switch .form-check-input{
+        margin-left: 0;
+    }
+    .form-check-input:checked[type=checkbox]{
+        background-color:#329787;
+    }
+    ul, li{
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<script>
+    function destacar(){
+        span_destaque=document.getElementById('span_destaque')
+        if (span_destaque.innerText=='Sim, destacar.'){
+            span_destaque.innerText='Não destacar.';
+        }else{
+            span_destaque.innerText='Sim, destacar.';
+        }
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function searchVaga(e){        
+        if (3<=String(e.value).length){
+            // console.log('buscando '+e.value)
+            getVaga(e.value)
+        }        
+    }    
+    function searchEmpresa(e){        
+        if (3<=String(e.value).length){
+            // console.log('buscando '+e.value)
+            getEmpresa(e.value)
+        }        
+    }    
+    function getEmpresa(value){
+        var url = '/get_empresa/';  
+        $.ajax({ 
+            url: url,
+            data: {
+                'empresa': value,
+            },
+            success: function(data) {                               
+                $("#search_empresa_result").html(data);
+            }
+        });                
+    };
+    function getVaga(value){
+        var url = '/get_vaga/';         
+        $.ajax({ 
+            url: url,
+            data: {
+                'vaga': value,
+            },
+            success: function(data) {                               
+                $("#search_vaga_result").html(data);
+            }
+        });                
+    };
+    function selectThisVaga(e){
+        document.getElementById('id_vaga').value=e.value
+        document.getElementById('search_vaga_result').innerHTML=''
+    }
+    function selectThisEmpresa(e){
+        document.getElementById('id_empresa').value=e.value
+        document.getElementById('search_empresa_result').innerHTML=''
+    }
+</script>
+
+{% endblock %}

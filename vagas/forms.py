@@ -14,9 +14,9 @@ class Form_Empresa(ModelForm):
         widgets = {'user': forms.HiddenInput()}
         exclude = ['dt_inclusao']
 
-class Form_Vaga(ModelForm):    
+class Form_Cargo(ModelForm):    
     class Meta:
-        model = Vaga
+        model = Cargo
         widgets = {'user': forms.HiddenInput()}
         exclude = ['dt_inclusao']
 
