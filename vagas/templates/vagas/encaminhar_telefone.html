@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Encaminhamento</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Akshar:wght@600&family=Roboto&display=swap" rel="stylesheet">
@@ -42,12 +42,10 @@
                 A CASA DO TRABALHADOR, no exercício de suas atribuições legais e regimentais,  
                 encaminha pelo presente o candidato <b>{{candidato.nome}}</b>, 
                 portador do CPF <b>{{candidato.cpf}}</b>, interessado na vaga de <b>{{vaga.cargo.nome}}</b>{% if not vaga.empresa.oculta %},
-                à empresa <b>{{vaga.empresa.nome}}</b> de CNPJ <b id="cnpj">{{vaga.empresa.cnpj}}</b>{% endif %}.
+                à empresa <b>{{vaga.empresa.nome}}</b> de CNPJ <b id="cnpj">{{vaga.empresa.cnpj}}{% endif %}</b>.
             </p>
-            <p>Pedimos ao candidato que busque fazer contato de forma presencial no endereço:</p>
-            <p style="text-align: center; margin: 0 30px;">
-            <span style="text-decoration: underline;">{{vaga.empresa.endereco}}.</span></p>
-            <p style="margin-top: 30px;">
+            <p>Pedimos ao candidato que busque fazer contato por telefone: <span id="celular" style="text-decoration: underline;">{{vaga.empresa.telefone}}</span></p>
+            <p>
                 <b>OBS.:</b>
                 As informações presentes nesta são de responsabilidade do candidato.
             </p>
@@ -76,6 +74,7 @@
             cnpj=String(document.getElementById('cnpj').innerHTML);
             console.log(cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5"));
             document.getElementById('cnpj').innerHTML=cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+            document.getElementById('celular').innerText=document.getElementById('celular').innerText.replace(/^(\d{1})(\d{1})(\d{5})(\d{4})/, "($1$2) $3-$4")
         };
     </script>
 </body>

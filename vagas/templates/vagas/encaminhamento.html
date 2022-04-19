@@ -1,0 +1,98 @@
+{% extends 'base_site.html' %}
+{% block title %}{{tipo_cadastro}} Vaga{% endblock %}
+{% block css %}
+{{block.super}}
+{% endblock%}
+{% block main_conteudo %}
+{% load widget_tweaks %}   
+{% load bootstrap5 %} 
+{% if success.0 %}
+<div class="row px-4 mb-3">
+    <div class="col d-flex bg-success py-2">
+        <p class="m-auto text-white">{{success.1}}</p>
+    </div>
+</div>
+{% endif %}                
+<div class="row">
+    <div class="col d-flex">
+        
+      <h2 class="text-start text-uppercase mb-4">ENCAMINHAMENTO</h2>
+      {% if request.user.is_staff %}
+      <span class="ms-auto">
+        <a class="btn btn-btfl bg-primary" href="{% url 'vagas:visualizar_vaga' id %}">VOLTAR</a>
+      </span>
+      {% endif %}
+    </div>
+  </div>
+<form id="form_cadastro_vaga" method="POST" action="{% url 'vagas:encaminhar' id %}" class="form w-100 text-start">
+    <div class="row">
+        <div class="col px-5">
+           
+            {% csrf_token %}            
+            <label class="text-uppercase" for="nome">Nome do candidato:</label>        
+            <input type="text" name="nome" class="form-control">                         
+            <label class="text-uppercase mt-3" for="nome">CPF do candidato:</label>        
+            <input type="text" name="cpf" class="form-control" onkeydown="mascara(this,icpf)"> 
+            <button type="submit" class="btn btn-primary text-white w-100 mt-3 text-uppercase ">
+            Gerar Encaminhamento
+            </button>
+
+        </div>      
+    </div>    
+    <style>
+        #form_cadastro_vaga ul, li{
+            list-style: none;
+        }
+        #form_cadastro_vaga button:hover{
+            background-color: #329787 !important;
+            border-color: #329787
+            color: white !important;
+        }
+        #form_cadastro button, .btn-primary{
+            background-color: #329787 !important;
+            border-color: #329787;
+        }
+        #id_ativo{
+            opacity: 0;
+        }
+        .form-check{
+            display: flex;            
+        }
+        .form-switch span{
+            margin-left: 10px;
+            padding-top: 4px;
+        }
+
+        .form-switch .form-check-input{
+            margin-left: 0;
+        }
+        .form-check-input:checked[type=checkbox]{
+            background-color:#329787;
+        }
+        ul, li{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</form>
+<script>
+        function mascara(o,f){
+            v_obj=o
+            v_fun=f
+            setTimeout("execmascara()",1)
+        }
+        function execmascara(){
+            v_obj.value=v_fun(v_obj.value)
+        }
+        function icpf(v){
+            v=v.replace(/\D/g,"")                    //Remove tudo o que nao e digito
+            v=v.replace(/(\d{3})(\d)/,"$1.$2")       //Coloca um ponto entre o terceiro e o quarto digitos
+            v=v.replace(/(\d{3})(\d)/,"$1.$2")       //Coloca um ponto entre o terceiro e o quarto digitos
+                                                                //de novo (para o segundo bloco de numeros)
+            v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2") //Coloca um hifen entre o terceiro e o quarto digitos
+            return v
+        }    
+</script>
+
+
+{% endblock %}

@@ -35,19 +35,17 @@
             <img src="{% static 'images/casa-do-trabalhador.png' %}" style="height: 100px; margin-left:0px; margin-right: 0px; margin-top: 10px; margin-left: auto;" alt="">            
         </header>
         <main style="padding: 0 100px; width: 800px; display: flex; flex-direction: column; padding-top: 60px; margin: auto;"> 
-            <h1 style="margin: auto;">ENCAMINHAMENTO</h1>
+            <h1 style="margin: auto;">ENCAMINHAMENTO EMAIL</h1>
 
             <span style="margin-top: 40px;">Prezado(a),</span>
             <p>
                 A CASA DO TRABALHADOR, no exercício de suas atribuições legais e regimentais,  
                 encaminha pelo presente o candidato <b>{{candidato.nome}}</b>, 
-                portador do CPF <b>{{candidato.cpf}}</b>, interessado na vaga de <b>{{vaga.cargo.nome}}</b>{% if not vaga.empresa.oculta %},
-                à empresa <b>{{vaga.empresa.nome}}</b> de CNPJ <b id="cnpj">{{vaga.empresa.cnpj}}</b>{% endif %}.
+                portador do CPF <b>{{candidato.cpf}}</b>, interessado na vaga de <b>{{vaga.cargo.nome}}</b>{% if not vaga.empresa.ocultar %},
+                à empresa <b>{{vaga.empresa.nome}}</b> de CNPJ <b id="cnpj">{{vaga.empresa.cnpj}}{% endif %}</b>.
             </p>
-            <p>Pedimos ao candidato que busque fazer contato de forma presencial no endereço:</p>
-            <p style="text-align: center; margin: 0 30px;">
-            <span style="text-decoration: underline;">{{vaga.empresa.endereco}}.</span></p>
-            <p style="margin-top: 30px;">
+            <p>Pedimos ao candidato que busque fazer contato por email: <span style="text-decoration: underline;">{{vaga.empresa.email}}</span></p>
+            <p>
                 <b>OBS.:</b>
                 As informações presentes nesta são de responsabilidade do candidato.
             </p>

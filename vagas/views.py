@@ -386,6 +386,33 @@ def login_view(request):
     return render(request, 'registration/login.html')
 
 @login_required
+def encaminhar(request, id):
+    from datetime import date
+    today = date.today()
+    vaga=Vaga_Emprego.objects.get(id=id)
+    if request.method=='POST':        
+        context={
+            'vaga': vaga,
+            'date': today,
+            'candidato': {'nome': request.POST['nome'], 'cpf': request.POST['cpf']}
+        }
+        print(vaga.empresa.formaDeContato)
+        if vaga.empresa.formaDeContato=='P':
+            return render(request, 'vagas/encaminhar.html', context)
+        elif vaga.empresa.formaDeContato=='T':            
+            return render(request, 'vagas/encaminhar_telefone.html', context)
+        elif vaga.empresa.formaDeContato=='E':            
+            return render(request, 'vagas/encaminhar_email.html', context)
+    return redirect('vagas:encaminhamento', id)
+
+@login_required
+def encaminhamento(request, id):    
+    context={
+        'id': id
+    }
+    return render(request, 'vagas/encaminhamento.html', context)
+
+@login_required
 def sair(request):
     if request.user.is_authenticated:
         logout(request)
