@@ -164,9 +164,15 @@ def cadastrar_vagaOfertada(request):
         gambiarra={}     
         for item in request.POST:
             if item=='cargo':
-                gambiarra[item]=Cargo.objects.get(nome=request.POST[item]).id
+                try:
+                    gambiarra[item]=Cargo.objects.get(nome=request.POST[item]).id
+                except:
+                    gambiarra[item]=request.POST[item]
             elif item=='empresa':
-                gambiarra[item]=Empresa.objects.get(nome=request.POST[item]).id
+                try:
+                    gambiarra[item]=Empresa.objects.get(nome=request.POST[item]).id
+                except:
+                    gambiarra[item]=request.POST[item]
             else:
                 gambiarra[item]=request.POST[item]
         form=CadastroVagasForm(gambiarra)             
@@ -292,9 +298,15 @@ def alterar_vaga(request, id):
         gambiarra={}     
         for item in request.POST:
             if item=='cargo':
-                gambiarra[item]=Cargo.objects.get(nome=request.POST[item]).id
+                try:
+                    gambiarra[item]=Cargo.objects.get(nome=request.POST[item]).id
+                except:
+                    gambiarra[item]=request.POST[item]
             elif item=='empresa':
-                gambiarra[item]=Empresa.objects.get(nome=request.POST[item]).id
+                try:
+                    gambiarra[item]=Empresa.objects.get(nome=request.POST[item]).id
+                except:
+                    gambiarra[item]=request.POST[item]
             else:
                 gambiarra[item]=request.POST[item]
         form=CadastroVagasForm(gambiarra)    

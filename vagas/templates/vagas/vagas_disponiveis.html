@@ -11,7 +11,10 @@
       <div class="col d-flex">
         <h2 class="text-start">VAGAS OFERTADAS</h2>
         {% if request.user.is_staff %}
-        <span class="ms-auto"><a class="btn btn-btfl" href="{% url 'vagas:cadastrar' %}">CADASTRAR</a></span>
+        <span class="ms-auto">
+          <a class="btn btn-btfl me-2 px-3" href="{% url 'vagas:imprimir' %}"><i class="fas fa-print"></i></a>
+          <a class="btn btn-btfl" href="{% url 'vagas:cadastrar' %}">CADASTRAR</a>
+        </span>
         {% endif %}
       </div>
     </div>

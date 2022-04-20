@@ -21,7 +21,7 @@
       <span class="ms-auto"><a class="btn btn-btfl bg-danger" href="{% url 'vagas:remover_vaga' id %}">Remover</a></span>
       {% endif %}      
       {% if tipo_cadastro == '' %}
-      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:encaminhamento' id %}" target="_black">Encaminhar</a></span>      
+      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:encaminhamento' id %}">Encaminhar</a></span>      
       {% endif %}
       <span class="{% if tipo_cadastro == 'cadastrar' %}ms-auto{% else %}ms-2{% endif %}"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:vagas' %}">Vagas Ofertadas</a></span>
       {% if tipo_cadastro == '' %}
@@ -44,7 +44,17 @@
             
             {% endif %}
             {% if f.errors %}
+            {% if f.name == 'cargo' %}
+            <input name="cargo"  {% if tipo_cadastro == '' %}disabled{% endif %}   autocomplete="off" id="id_vaga" onkeyup="searchVaga(this)" type="text" class="form-control bg-light mb-2 is-invalid" value="{{cargo}}">                
+            <span id="search_vaga_result"></span>
+
+            {% elif f.name == 'empresa' %}
+            <input name="empresa" {% if tipo_cadastro == '' %}disabled{% endif %} autocomplete="off" id="id_empresa" onkeyup="searchEmpresa(this)" type="text" class="form-control bg-light mb-2 is-invalid" value="{{empresa}}">                
+            <span id="search_empresa_result"></span>        
+                
+            {% else %}
                 {{f|add_class:'form-control  my-2 is-invalid'}}
+            {% endif %}
             {% elif f.name == 'destaque' %}
             {% if tipo_cadastro != '' %}                                                    
                 <div class="form-check form-switch" style="margin: 0; padding-left: 0;">  

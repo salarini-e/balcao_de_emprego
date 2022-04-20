@@ -18,6 +18,7 @@ urlpatterns = [
     path('visualizar-vaga/alt0x#<id>/encaminhar', views.encaminhar, name='encaminhar'),    
     path('visualizar-vaga/alt0x#<id>001/encaminhamento', views.encaminhamento, name='encaminhamento'),    
     path('vagas/', views.vagas, name='vagas'),    
+    path('vagas/imprimir', views.vagas, name='imprimir'),    
     path('listar-cargos/', views.listar_cargos, name='listar_cargos'),    
     path('empresas/', views.empresas, name='empresas'),    
     path('escolaridades/', views.escolaridades, name='escolaridades'),    
