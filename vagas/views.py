@@ -1,4 +1,5 @@
 # PARA AS VIEWS
+from django.views.decorators.clickjacking import xframe_options_exempt
 from multiprocessing import context
 from django.shortcuts import render, redirect
 # AUTH
@@ -354,6 +355,13 @@ def listar_cargos(request):
     }
     return render(request, 'vagas/listar_cargos.html', context)
 
+def imprimir_vagas(request):
+    context={
+        'vagas': Vaga_Emprego.objects.filter(ativo=True)
+    }
+    return render(request, 'vagas/imprimir_vagas.html', context)
+
+@xframe_options_exempt
 def vagas_table(request):
     context={
         'vagas': Vaga_Emprego.objects.filter(ativo=True)
