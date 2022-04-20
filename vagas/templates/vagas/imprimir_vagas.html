@@ -30,7 +30,33 @@
 </head>
 <body style="display: flex;">
     <div style="margin: auto; width: 100%;">
-        <iframe src="http://casadotrabalhador.pmnf.rj.gov.br/vagas/table/" frameborder="0"></iframe>
+        <header style="display: flex; width: 800px; margin: auto; ">            
+            <img src="{% static 'images/logo.jpg' %}" style="height: 110px;" alt="">            
+            <img src="{% static 'images/casa-do-trabalhador.png' %}" style="height: 100px; margin-left:0px; margin-right: 0px; margin-top: 10px; margin-left: auto;" alt="">            
+        </header>
+        <main style="padding: 0 100px; width: 800px; display: flex; flex-direction: column; padding-top: 60px; margin: auto;"> 
+            <h1 style="margin: auto; padding-bottom: 50px;">Vagas Disponíveis</h1>
+            <table class="table table-hover mt-4" style="font-size: 14pt;">
+                <thead>
+                    <tr style="background-color: rgb(0, 0, 0); color: white; height: 30pt; font-family: Arial, sans-serif;">  
+                        <th scope="col">Vagas</th>
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Experiência</th>
+                        <th scope="col">Escolaridade</th>                            
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for vaga in vagas %}        
+                    <tr style="height: 30pt;background-color: rgba(230, 230, 230, 0.274); text-align: center;">
+                        <td scope="row">{{vaga.quantidadeVagas}}</td>
+                        <td>{{vaga.cargo}}</td>            
+                        <td>{{vaga.experiencia}}</td>      
+                        <td>{{vaga.escolaridade}}</td>                     
+                      </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </main>
     </div>
 </body>
 </html>
