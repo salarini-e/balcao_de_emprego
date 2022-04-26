@@ -20,17 +20,21 @@
         <img src="/static/images/casa-do-trabalhador.png" alt="">
         <div class="container p-5 m-auto rounded">
             <form method="POST">
-                <h1>Login</h1>
-                {% csrf_token %}{% if error %}<div class="row px-2 pt-4">
+                <h1>Login {{error}}</h1>
+                {% csrf_token %}
+                {% if error %}<div class="row px-2 pt-4">
                     <div class="col bg-danger text-white text-center p-3">                                                
                             Seu nome de usuário e senha não conferem. 
                             Por favor, tente de novo. 
                     </div>
-                </div>{% endif %}{% if error2 %}<div class="row px-2 pt-4">
+                </div>
+                {% endif %}
+                {% if error2 %}<div class="row px-2 pt-4">
                     <div class="col bg-danger text-white text-center p-3">                                                
                             Não aceitamos robôs por aqui.
                     </div>
-                </div>{% endif %}
+                </div>
+                {% endif %}
                 <div class="mb-3 mt-4">
                   <label for="exampleInputEmail1" class="form-label">Email</label>
                   <input name="username" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">                  

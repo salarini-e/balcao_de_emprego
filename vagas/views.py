@@ -370,6 +370,8 @@ def vagas_table(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     if request.method == 'POST':
         #Abaixo recebemos a validação da API do Google do reCAPTCHA
         ''' Begin reCAPTCHA validation '''

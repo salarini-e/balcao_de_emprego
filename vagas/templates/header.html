@@ -5,9 +5,9 @@
                 <div class="my-auto d-flex">
                     {% if request.user.is_authenticated %}
                     <h6 class="text-bold my-auto me-4">Olá,<b> {{ user.first_name }}</b>!</h6>
-                    <a class="btn border tablet_hidden" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i></i>Logout</a>
+                    <a class="btn border tablet_hidden" href="{% url 'vagas:logout' %}"><i class="fas fa-sign-out-alt me-2"></i></i>Logout</a>
                     {% else %}
-                    <a class="btn" href="{% url 'login' %}?next={{ request.path|urlencode }}"><i class="fas fa-user me-2"></i>Login</a>            
+                    <a class="btn" href="{% url 'vagas:login' %}?next={{ request.path|urlencode }}"><i class="fas fa-user me-2"></i>Login</a>            
                     {% endif %}
                     <button onclick="showMenu()" class="btn menu mobile">
                         <i class="fas fa-bars"></i>
