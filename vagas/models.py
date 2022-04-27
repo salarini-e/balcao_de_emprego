@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .validations import validate_CNPJ
+from .validations import validate_CNPJ, validate_TELEFONE
 # Create your models here.
 
 class Escolaridade(models.Model):
@@ -25,10 +25,10 @@ class Empresa(models.Model):
                             ('P', 'PRESENCIAL')
     )
 
-    nome=models.CharField(max_length=150, verbose_name='Nome da empresa', unique=True)
-    cnpj=models.CharField(max_length=14, verbose_name='CNPJ da empresa', unique=True)
+    nome=models.CharField(max_length=150, verbose_name='NOME', unique=True)
+    cnpj=models.CharField(max_length=14, validators=[validate_CNPJ], verbose_name='CNPJ', unique=True)
     endereco=models.CharField(max_length=60, blank=False, null=False, verbose_name='Endereço')
-    telefone=models.CharField(max_length=11, blank=False, null=False, verbose_name='Telefone')
+    telefone=models.CharField(max_length=11, validators=[validate_TELEFONE], blank=False, null=False, verbose_name='Telefone')
     email=models.EmailField(max_length=254)
     formaDeContato=models.CharField(max_length=1, choices=FORMA_CONTATO_CHOICES, verbose_name='Forma de contato')
     ocultar=models.BooleanField(default=True, verbose_name='Informações da empresa', choices=OCULTAR_CHOICES)

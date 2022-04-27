@@ -41,10 +41,14 @@
                 <span id="span_destaque">{% if f.value %}Sim, destacar.{% else %}Não destacar.{% endif %}</span>
             </div>
             {% else %}
+                {%if f.name == 'cnpj' %}
+                {{f|add_class:'form-control bg-light my-2'|attr:'onkeydown:mascara(this,icnpj)'|attr:'maxlength:18'}}
+                {% else %}
                 {{f|add_class:'form-control bg-light my-2'}}
+                {% endif %}
             {% endif  %}
             <div class="invalid-feedback mb-2">
-                {{f.errors}}
+                {{f.errors.0}}
             </div>
             {% endfor %}
 
@@ -98,6 +102,47 @@
         }else{
             span_destaque.innerText='Sim, destacar.';
         }
+    }
+    function icnpj(v){
+        v=v.replace(/\D/g,"")                    //Remove tudo o que nao e digito
+        v=v.replace(/(\d{2})(\d)/,"$1.$2")       //Coloca um ponto entre o segundo e terceiro digitos
+        v=v.replace(/(\d{3})(\d)/,"$1.$2")       //Coloca um ponto entre o quinto e o sexto digitos
+        v=v.replace(/(\d{3})(\d)/,"$1/$2")       //Coloca um ponto entre o quinto e o sexto digitos
+        v=v.replace(/(\d{4})(\d)/,"$1-$2")       //Coloca um ponto entre o quinto e o sexto digitos
+        // v=v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
+        return v
+    }
+    function itelefone(v){
+        v=v.replace(/\D/g,"")                 //Remove tudo o que nao e digito
+        v=v.replace(/^(\d\d)(\d)/g,"($1) $2") //Coloca parenteses em volta dos dois primeiros digitos
+        v=v.replace(/(\d{4})(\d)/,"$1-$2")    //Coloca hifen entre o quarto e o quinto digitos
+        return v
+    }
+    function icelular(v){
+        v=v.replace(/\D/g,"")                 //Remove tudo o que nao e digito
+        v=v.replace(/^(\d\d)(\d)/g,"($1) $2") //Coloca parenteses em volta dos dois primeiros digitos
+        v=v.replace(/(\d{5})(\d)/,"$1-$2")    //Coloca hifen entre o quarto e o quinto digitos
+        return v
+    }
+    function mascara(o,f){
+        v_obj=o
+        v_fun=f
+        setTimeout("execmascara()",1)
+    }            
+    function execmascara(){
+        v_obj.value=v_fun(v_obj.value)
+    }
+    function itel(v){
+        if (v.length==15){
+            v=v.replace(/\D/g,"")                 //Remove tudo o que nao e digito
+            v=v.replace(/^(\d\d)(\d)/g,"($1) $2") //Coloca parenteses em volta dos dois primeiros digitos
+            v=v.replace(/(\d{5})(\d)/,"$1-$2")  
+        }else{
+            v=v.replace(/\D/g,"")                 //Remove tudo o que nao e digito
+            v=v.replace(/^(\d\d)(\d)/g,"($1) $2") //Coloca parenteses em volta dos dois primeiros digitos
+            v=v.replace(/(\d{4})(\d)/,"$1-$2")    // 
+        }
+        return v
     }
 </script>
 

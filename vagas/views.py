@@ -36,7 +36,7 @@ def cadastrar_empresa(request):
                 'tipo_cadastro': 'Cadastrar',
                 'form': Form_Empresa(initial={'user':request.user}),
                 'hidden': ['user', 'ativo'],
-                'success': [True, 'Vaga cadastrada com sucesso!']
+                'success': [True, 'Empresa cadastrada com sucesso!']
             }
             return render(request, 'vagas/cadastrar_empresa.html', context)  
     else:
