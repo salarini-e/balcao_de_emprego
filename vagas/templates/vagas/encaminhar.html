@@ -56,7 +56,17 @@
             <span id="telefone" style="text-decoration: underline; margin: 0px 30px;">{{vaga.empresa.telefone}}</span></p>
             <script>
                  window.onload = function(){                    
-                    document.getElementById('telefone').innerText=document.getElementById('telefone').innerText.replace(/^(\d{1})(\d{1})(\d{5})(\d{4})/, "($1$2) $3-$4")
+                    document.getElementById('telefone').innerText=document.getElementById('telefone').innerText.replace(/^(\d{1})(\d{1})(\d{4})(\d{4})/, "($1$2) $3-$4")
+                };
+            </script>
+            {% endif %}
+            {% if vaga.empresa.contato_whatsapp %}
+            <p style="margin: 10px 30px;">                
+            Por whatsapp: <br>
+            <span id="whatsapp" style="text-decoration: underline; margin: 0px 30px;">{{vaga.empresa.whatsapp}}</span></p>
+            <script>
+                 window.onload = function(){                    
+                    document.getElementById('whatsapp').innerText=document.getElementById('whatsapp').innerText.replace(/^(\d{1})(\d{1})(\d{4})(\d{4})/, "($1$2) $3-$4")
                 };
             </script>
             {% endif %}

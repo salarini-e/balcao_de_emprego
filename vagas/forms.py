@@ -10,7 +10,8 @@ class CadastroVagasForm(ModelForm):
 
 class Form_Empresa(ModelForm):  
     cnpj = forms.CharField(label='CNPJ', max_length=18, widget = forms.TextInput(attrs={'onkeydown':"mascara(this,icnpj)"}))  
-    telefone = forms.CharField(label='telefone', max_length=15, widget = forms.TextInput(attrs={'onkeydown':"mascara(this,itel)"}))  
+    telefone = forms.CharField(label='Telefone p/ encaminhamento', max_length=15, widget = forms.TextInput(attrs={'onkeydown':"mascara(this,itel)"}))  
+    whatsapp = forms.CharField(label='Whatsapp p/ encaminhamento', max_length=15, widget = forms.TextInput(attrs={'onkeydown':"mascara(this,itel)"}))  
 
     class Meta:
         model = Empresa
@@ -28,6 +29,11 @@ class Form_Empresa(ModelForm):
         print(self.cleaned_data["telefone"])
         telefone = validate_TELEFONE(self.cleaned_data["telefone"])        
         return telefone
+
+    def clean_whatsapp(self):
+        print(self.cleaned_data["whatsapp"])
+        whatsapp = validate_TELEFONE(self.cleaned_data["whatsapp"])        
+        return whatsapp
 
 class Form_Cargo(ModelForm):    
     class Meta:
