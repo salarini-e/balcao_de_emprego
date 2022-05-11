@@ -10,8 +10,8 @@ class CadastroVagasForm(ModelForm):
 
 class Form_Empresa(ModelForm):  
     cnpj = forms.CharField(label='CNPJ', max_length=18, widget = forms.TextInput(attrs={'onkeydown':"mascara(this,icnpj)"}))  
-    telefone = forms.CharField(label='Telefone p/ encaminhamento', max_length=15, widget = forms.TextInput(attrs={'onkeydown':"mascara(this,itel)"}))  
-    whatsapp = forms.CharField(label='Whatsapp p/ encaminhamento', max_length=15, widget = forms.TextInput(attrs={'onkeydown':"mascara(this,itel)"}))  
+    telefone = forms.CharField(label='Telefone p/ encaminhamento', max_length=15, required=False, widget = forms.TextInput(attrs={'onkeydown':"mascara(this,itel)"}))  
+    whatsapp = forms.CharField(label='Whatsapp p/ encaminhamento', max_length=15, required=False, widget = forms.TextInput(attrs={'onkeydown':"mascara(this,itel)"}))  
 
     class Meta:
         model = Empresa
