@@ -44,9 +44,27 @@
                 portador do CPF <b>{{candidato.cpf}}</b>, interessado na vaga de <b>{{vaga.cargo.nome}}</b>{% if not vaga.empresa.ocultar %},
                 à empresa <b>{{vaga.empresa.nome}}</b> de CNPJ <b id="cnpj">{{vaga.empresa.cnpj}}</b>{% endif %}.
             </p>
-            <p>Pedimos ao candidato que busque fazer contato de forma presencial, munido de seu currículo,  no endereço:</p>
-            <p style="text-align: center; margin: 0 30px;">
-            <span style="text-decoration: underline;">{{vaga.empresa.endereco}}.</span></p>
+            <p>Pedimos ao candidato que busque fazer contato:</p>            
+            {% if vaga.empresa.contato_presencial %}
+            <p style="margin: 0 30px;">                
+            De forma presencial, munido de seu currículo,  no endereço: <br>
+            <span style="text-decoration: underline; margin: 0px 30px;">{{vaga.empresa.endereco}}</span></p>
+            {% endif %}
+            {% if vaga.empresa.contato_telefone %}
+            <p style="margin: 10px 30px;">                
+            Por telefone: <br>
+            <span id="telefone" style="text-decoration: underline; margin: 0px 30px;">{{vaga.empresa.telefone}}</span></p>
+            <script>
+                 window.onload = function(){                    
+                    document.getElementById('telefone').innerText=document.getElementById('telefone').innerText.replace(/^(\d{1})(\d{1})(\d{5})(\d{4})/, "($1$2) $3-$4")
+                };
+            </script>
+            {% endif %}
+            {% if vaga.empresa.contato_email %}
+            <p style="margin: 0 30px;">                
+            Por email, com seu currículo em anexo,  ao endereço: <br>
+            <span style="text-decoration: underline; margin: 0px 30px;">{{vaga.empresa.email}}</span></p>
+            {% endif %}
             <p style="margin-top: 30px;">
                 <b>OBS.:</b>
                 As informações presentes nesta são de responsabilidade do candidato.

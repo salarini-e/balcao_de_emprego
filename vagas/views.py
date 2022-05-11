@@ -412,19 +412,14 @@ def encaminhar(request, id):
     from datetime import date
     today = date.today()
     vaga=Vaga_Emprego.objects.get(id=id)
-    if request.method=='POST':        
+    if request.method=='POST':          
         context={
             'vaga': vaga,
             'date': today,
             'candidato': {'nome': request.POST['nome'], 'cpf': request.POST['cpf']}
-        }
-        print(vaga.empresa.formaDeContato)
-        if vaga.empresa.formaDeContato=='P':
-            return render(request, 'vagas/encaminhar.html', context)
-        elif vaga.empresa.formaDeContato=='T':            
-            return render(request, 'vagas/encaminhar_telefone.html', context)
-        elif vaga.empresa.formaDeContato=='E':            
-            return render(request, 'vagas/encaminhar_email.html', context)
+        }        
+        return render(request, 'vagas/encaminhar.html', context)
+        
     return redirect('vagas:encaminhamento', id)
 
 @login_required

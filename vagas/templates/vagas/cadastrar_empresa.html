@@ -35,10 +35,20 @@
             {% endif %}
             {% if f.errors %}
                 {{f|add_class:'form-control  my-2 is-invalid'}}
-            {% elif f.name == 'destaque' %}
+            {% elif f.name == 'contato_email' %}
             <div class="form-check form-switch" style="margin: 0; padding-left: 0;">                                                
-                {{f|add_class:'form-check-input my-2'|attr:'type:checkbox'|attr:'role=switch'|attr:"onclick=destacar()"}}
-                <span id="span_destaque">{% if f.value %}Sim, destacar.{% else %}Não destacar.{% endif %}</span>
+                {{f|add_class:'form-check-input my-2'|attr:'type:checkbox'|attr:'role=switch'|attr:"onclick=fcontato_email()"}}
+                <span id="span_contato_email">{% if f.value %}Sim.{% else %}Não.{% endif %}</span>
+            </div>
+            {% elif f.name == 'contato_presencial' %}
+            <div class="form-check form-switch" style="margin: 0; padding-left: 0;">                                                
+                {{f|add_class:'form-check-input my-2'|attr:'type:checkbox'|attr:'role=switch'|attr:"onclick=fcontato_presencial()"}}
+                <span id="span_contato_presencial">{% if f.value %}Sim.{% else %}Não.{% endif %}</span>
+            </div>
+            {% elif f.name == 'contato_telefone' %}
+            <div class="form-check form-switch" style="margin: 0; padding-left: 0;">                                                
+                {{f|add_class:'form-check-input my-2'|attr:'type:checkbox'|attr:'role=switch'|attr:"onclick=fcontato_telefone()"}}
+                <span id="span_contato_telefone">{% if f.value %}Sim.{% else %}Não.{% endif %}</span>
             </div>
             {% else %}
                 {%if f.name == 'cnpj' %}
@@ -95,12 +105,28 @@
     </style>
 </form>
 <script>
-    function destacar(){
-        span_destaque=document.getElementById('span_destaque')
-        if (span_destaque.innerText=='Sim, destacar.'){
-            span_destaque.innerText='Não destacar.';
+    function fcontato_email(){
+        span=document.getElementById('span_contato_email')
+        if (span.innerText=='Sim.'){
+            span.innerText='Não.';
         }else{
-            span_destaque.innerText='Sim, destacar.';
+            span.innerText='Sim.';
+        }
+    }
+    function fcontato_presencial(){
+        span=document.getElementById('span_contato_presencial')
+        if (span.innerText=='Sim.'){
+            span.innerText='Não.';
+        }else{
+            span.innerText='Sim.';
+        }
+    }
+    function fcontato_telefone(){
+        span=document.getElementById('span_contato_telefone')
+        if (span.innerText=='Sim.'){
+            span.innerText='Não.';
+        }else{
+            span.innerText='Sim.';
         }
     }
     function icnpj(v){
