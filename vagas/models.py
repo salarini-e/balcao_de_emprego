@@ -46,7 +46,7 @@ class Empresa(models.Model):
 
 class Cargo(models.Model):
 
-    nome=models.CharField(max_length=100, verbose_name='Nome da vaga', unique=True)
+    nome=models.CharField(max_length=100, verbose_name='Nome do cargo', unique=True)
     user=models.ForeignKey(User, on_delete=models.PROTECT)                    
     dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')
 
