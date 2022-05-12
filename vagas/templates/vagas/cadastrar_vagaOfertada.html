@@ -14,10 +14,10 @@
     </div>
 </div>
 {% endif %}                  
-<div class="row">
+<div class="row">    
     <div class="col d-flex">
       <h2 class="text-start text-uppercase">{{ tipo_cadastro }} VAGA OFERTADA</h2>
-      {% if tipo_cadastro == 'alterar' %}
+      {% if tipo_cadastro == 'Alterar' %}
       <span class="ms-auto"><a class="btn btn-btfl bg-danger" href="{% url 'vagas:remover_vaga' id %}">Remover</a></span>
       {% endif %}      
       {% if tipo_cadastro == '' %}

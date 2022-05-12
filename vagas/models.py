@@ -76,4 +76,4 @@ class Vaga_Emprego(models.Model):
     dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')
     ativo=models.BooleanField(default=True)        
     def __str__(self):
-        return '%s - %s' % (self.empresa, self.vaga)
+        return '%s - %s' % (self.empresa, self.cargo)

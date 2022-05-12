@@ -5,6 +5,7 @@
 {{block.super}}
 {% endblock%}
 {% block main_conteudo %}
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <div class="col">
     <!-- <h2 class="text-start">VAGAS DISPONÍVEIS</h2> -->
     <div class="row">
@@ -18,7 +19,23 @@
         {% endif %}
       </div>
     </div>
-    <table class="table table-hover mt-4">
+    <div class="row mt-4">
+      <div class="col d-flex">
+        <style>
+          #buscador {
+            background-image: url('/static/images/search.png');
+            background-position: 10px 8px;
+            background-repeat: no-repeat;            
+            font-size: 16px;
+            padding: 12px 0px 12px 50px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+          }
+        </style>
+        <input type="text" id="buscador" class=" ms-auto" placeholder="Procurar...">
+      </div>
+    </div>
+    <table class="table table-hover">
       <thead>
           <tr> 
               {% if user.is_authenticated %}
@@ -29,10 +46,13 @@
               <!-- <th scope="col">Empresa</th>
               <th scope="col">Vagas</th> -->
               <th scope="col">Experiência</th>
-              <th scope="col">Escolaridade</th>                            
+              <th scope="col">Escolaridade</th>      
+              {% if user.is_authenticated %}
+              <th>Empresa</th>                      
+              {% endif %}
             </tr>
           </thead>
-          <tbody>
+          <tbody id="busca">
           {% for vaga in vagas %}        
           <tr onpointerover="showEditIcon(editIcon_1532{{vaga.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{vaga.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:visualizar_vaga' vaga.id %}')"{% endif %}>
             {% if user.is_authenticated %}
@@ -44,6 +64,9 @@
               <td>{{vaga.quantidadeVagas}}</td> -->
               <td>{{vaga.experiencia}}</td>      
               <td>{{vaga.escolaridade}}</td>                     
+              {% if user.is_authenticated %}
+              <td>{{vaga.empresa.nome}}</td>
+              {% endif %}
             </tr>
           {% endfor %}
       </tbody>
@@ -63,6 +86,14 @@
       function hiddenEditIcon(id){
         id.style.visibility='hidden'              
       }
+      $(document).ready(function(){
+        $("#buscador").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#busca tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
     </script>
 </div>
 {% endblock %}
