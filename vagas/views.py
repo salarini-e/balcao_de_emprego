@@ -333,7 +333,7 @@ def alterar_vaga(request, id):
 
 def vagas(request):
     context={
-        'vagas': Vaga_Emprego.objects.filter(ativo=True)
+        'vagas': Vaga_Emprego.objects.filter(ativo=True).order_by('cargo')
     }
     return render(request, 'vagas/vagas_disponiveis.html', context)
 
