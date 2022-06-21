@@ -261,7 +261,7 @@ def get_cargo(request):
     }
     return render(request, 'vagas/resultVagaSearchs.html', context)
 
-@login_required
+
 def visualizar_vaga(request, id):
     if request.method=='POST':    
         gambiarra={}     
@@ -283,14 +283,26 @@ def visualizar_vaga(request, id):
         vaga=Vaga_Emprego.objects.get(id=id)
         form=CadastroVagasForm(instance=vaga)
 
-    context={
-        'id': id,
-        'tipo_cadastro': '',
-        'form': form,
-        'hidden': ['user', 'ativo', 'destaque'],
-        'cargo': vaga.cargo.nome,
-        'empresa': vaga.empresa.nome
-    }
+    if request.user.is_authenticated:
+        context={
+            'id': id,
+            'tipo_cadastro': '',
+            'form': form,
+            'hidden': ['user', 'ativo', 'destaque'],
+            'cargo': vaga.cargo.nome,
+            'empresa': vaga.empresa.nome
+        }
+    else:
+        context={
+                'id': id,
+                'tipo_cadastro': '',
+                'form': form,
+                'hidden': ['user', 'ativo', 'destaque', 'empresa'],
+                'cargo': vaga.cargo.nome,
+                'empresa': vaga.empresa.nome
+            }
+    
+    
     return render(request, 'vagas/cadastrar_vagaOfertada.html', context)
 
 @login_required

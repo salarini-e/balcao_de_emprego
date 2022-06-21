@@ -66,7 +66,7 @@ class Vaga_Emprego(models.Model):
     )
     
     TIPO_DE_VAGA_CHOICES=(
-                            ('NML', 'Normal'),
+                            ('NML', 'Padrão'),
                             ('JAP', 'Jovem aprendiz'),
                             ('PED', 'Pessoa com deficiência')
     )
@@ -76,11 +76,11 @@ class Vaga_Emprego(models.Model):
     quantidadeVagas=models.IntegerField(blank=False, null=False, verbose_name='Quantidade de vagas')
     tipo_de_vaga=models.CharField(max_length=3, choices=TIPO_DE_VAGA_CHOICES, default='NML')
     escolaridade=models.ForeignKey(Escolaridade, on_delete=models.CASCADE)
-    salario=models.CharField(max_length=50, default='', blank=True)
-    carga_horaria=models.CharField(max_length=50, default='', blank=True)
+    salario=models.CharField(max_length=50, default='', blank=True, verbose_name='Salário')
+    carga_horaria=models.CharField(max_length=50, default='', blank=True, verbose_name='Carga Hórario')
     regime=models.CharField(max_length=100, default='', blank=True)
     experiencia=models.CharField(max_length=3, choices=EXPERIENCIA_CHOICES, verbose_name='Experiência')    
-    atribuicoes=models.TextField(default='', blank=True)
+    atribuicoes=models.TextField(default='', blank=True, verbose_name='Atribuições')
     destaque=models.BooleanField(default=False)
     user=models.ForeignKey(User, on_delete=models.PROTECT)                    
     dt_inclusao = models.DateTimeField(auto_now_add=True, verbose_name='Dt. Inclusão')

@@ -16,26 +16,48 @@
 {% endif %}                  
 <div class="row">    
     <div class="col d-flex">
-      <h2 class="text-start text-uppercase">{{ tipo_cadastro }} VAGA OFERTADA</h2>
-      {% if tipo_cadastro == 'Alterar' %}
-      <span class="ms-auto"><a class="btn btn-btfl bg-danger" href="{% url 'vagas:remover_vaga' id %}">Remover</a></span>
-      {% endif %}      
-      {% if tipo_cadastro == '' %}
-      <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:encaminhamento' id %}">Encaminhar</a></span>      
-      {% endif %}
-      <span class="{% if tipo_cadastro == 'cadastrar' %}ms-auto{% else %}ms-2{% endif %}"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:vagas' %}">Vagas Ofertadas</a></span>
-      {% if tipo_cadastro == '' %}
-      <span class="ms-2"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:alterar_vaga' id %}"><i class="fas fa-edit"></i></a></span>
-      {% endif %}
-      {% if tipo_cadastro == 'alterar' %}
-      <span class="ms-2"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:visualizar_vaga' id %}">Voltar</a></span>
-      {% endif %}
+        <h2 class="text-start text-uppercase">{{ tipo_cadastro }} VAGA OFERTADA</h2>
+        {% if request.user.is_authenticated %}
+            {% if tipo_cadastro == 'Alterar' %}
+            <span class="ms-auto"><a class="btn btn-btfl bg-danger" href="{% url 'vagas:remover_vaga' id %}">Remover</a></span>
+            {% endif %}      
+            {% if tipo_cadastro == '' %}
+            <span class="ms-auto"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:encaminhamento' id %}">Encaminhar</a></span>      
+            {% endif %}
+        {% endif %}
+
+            <span class="{% if not request.user.is_authenticated %}ms-auto{% else %}{% if tipo_cadastro == 'cadastrar' %}ms-auto{% else %}ms-2{% endif %}{% endif %}"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:vagas' %}">Vagas Ofertadas</a></span>
+        
+            {% if request.user.is_authenticated %}
+            {% if tipo_cadastro == '' %}
+            <span class="ms-2"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:alterar_vaga' id %}"><i class="fas fa-edit"></i></a></span>
+            {% endif %}
+            {% if tipo_cadastro == 'alterar' %}
+            <span class="ms-2"><a class="btn btn-btfl bg-primary" href="{% url 'vagas:visualizar_vaga' id %}">Voltar</a></span>
+            {% endif %}
+        {% endif %}
+
       
+    </div>
+  </div>
+  <div class="row">
+    <div class="col py-4 text-start d-flex">
+       <div class="m-auto">
+        <p><b>Para mais informações sobre essa vaga:</b></p>
+        <p><i class="fab fa-whatsapp me-1"></i> (22) 99793-5451</p>
+        <p><i class="fas fa-phone-alt me-1"></i> (22) 2525-9205</p>
+        <p><i class="fas fa-map-marker-alt me-2"></i> Av. Alberto Braunes - 223 (Antiga rodoviária)</p>
+       </div>
     </div>
   </div>
 <form id="form_cadastro_vaga" {% if tipo_cadastro != '' %}method="post"{% endif %} class="form w-100 text-start">
     <div class="row">
-        <div class="col px-5">
+        <div class="col">
+            <h4>Detalhes da vaga:</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col pt-3 px-5">
             {% csrf_token %}
             {% for f in form %}                
             {% if not f.name in hidden %}
@@ -67,9 +89,10 @@
             <span id="search_vaga_result"></span>
 
             {% elif f.name == 'empresa' %}
+            {% if request.user.is_authenticated %}
             <input name="empresa" {% if tipo_cadastro == '' %}disabled{% endif %} autocomplete="off" id="id_empresa" onkeyup="searchEmpresa(this)" type="text" class="form-control bg-light mb-2" value="{{empresa}}">                
             <span id="search_empresa_result"></span>        
-                
+            {% endif %}
             {% else %}
                 {% if tipo_cadastro == '' %}
                 {{f|add_class:'form-control bg-light my-2'|attr:'disabled'}}
