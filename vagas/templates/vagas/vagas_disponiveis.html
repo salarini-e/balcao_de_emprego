@@ -32,41 +32,76 @@
             margin-bottom: 12px;
           }
         </style>
-        <input type="text" id="buscador" class=" ms-auto" placeholder="Procurar...">
+        <input type="text" id="buscador" class="w-100" placeholder="Procurar...">
       </div>
     </div>
     <table class="table table-hover">
-      <thead>
-          <tr> 
-              {% if user.is_authenticated %}
-              <th></th>
-              {% endif %}
-              <th scope="col">Vagas</th>
-              <th scope="col">Cargo</th>
-              <!-- <th scope="col">Empresa</th>
-              <th scope="col">Vagas</th> -->
-              <th scope="col">Experiência</th>
-              <th scope="col">Escolaridade</th>      
-              {% if user.is_authenticated %}
-              <th>Empresa</th>                      
-              {% endif %}
-            </tr>
-          </thead>
-          <tbody id="busca">
-          {% for vaga in vagas %}        
-          <tr onpointerover="showEditIcon(editIcon_1532{{vaga.id}}d1sa56)" onpointerout="hiddenEditIcon(editIcon_1532{{vaga.id}}d1sa56)" style="background-color: rgba(230, 230, 230, 0.274);{% if user.is_authenticated %}cursor: pointer;{% endif %}" {% if user.is_authenticated %}onclick="(window.location.href='{% url 'vagas:visualizar_vaga' vaga.id %}')"{% endif %}>
+      <!-- <thead>
+        <tr> 
             {% if user.is_authenticated %}
-              <td style="vertical-align: middle;"><img id="editIcon_1532{{vaga.id}}d1sa56" style="height: 18px;" src="{% static 'images/edit-icon.png' %}" alt=""></td>     
-              {% endif %}
-              <td scope="row">{{vaga.quantidadeVagas}}</td>
-              <td>{{vaga.cargo}}</td>            
-              <!-- <td>{{vaga.empresa}}</td>
-              <td>{{vaga.quantidadeVagas}}</td> -->
-              <td>{{vaga.experiencia}}</td>      
-              <td>{{vaga.escolaridade}}</td>                     
-              {% if user.is_authenticated %}
-              <td>{{vaga.empresa.nome}}</td>
-              {% endif %}
+            <th></th>
+            {% endif %}
+            <th scope="col">Vagas</th>
+            <th scope="col">Cargo</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Vagas</th>
+            <th scope="col">Experiência</th>
+            <th scope="col">Escolaridade</th>      
+            {% if user.is_authenticated %}
+            <th>Empresa</th>                      
+            {% endif %}
+          </tr>
+        </thead>-->
+          <tbody id="busca"> 
+          {% for vaga in vagas %}        
+          <tr id="{{forloop.counter}}" style="background-color: rgba(230, 230, 230, 0.274);">
+            <div id="{{forloop.counter}}-div" class="text-start py-4">
+                <div class="row">
+                  <div class="col d-flex">
+                    <div>
+                      <div class="d-flex">                        
+                        <h4 id="{{forloop.counter}}-cargo" class="cargo">{{vaga.cargo}}</h4>                        
+                      </div>
+                      
+
+                      <div>
+                        <small>Vagas: {{vaga.quantidadeVagas}}</small>
+                        <span class="ms-4 text-gray"><i>Requer experiência!</i></span>
+                      </div>
+                    </div>
+                    <div class="ms-auto text-center">
+                      <a href="{% url 'vagas:visualizar_vaga' vaga.id %}" class="btn btn-success">
+                        DETALHES DA VAGA
+                      </a>
+                      {% if vaga.tipo_de_vaga != 'NML' %}
+                      <span class="d-flex">
+                        <h6 class="me-auto mt-3">[</h6>
+                        <h6 class="ms-auto mt-3"> {{vaga.get_tipo_de_vaga_display}} </h6>
+                        <h6 class="ms-auto mt-3">]</h6>
+                      </span>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col pt-1">
+                    <div>                      
+                      <span><b class="me-1">Escolaridade:</b> {{vaga.escolaridade}}</span>
+                      <span class="ms-4"><b>Carga hóraria:</b> {{vaga.carga_horaria}}</span>
+                      <span class="ms-4">
+                        {% if vaga.regime != '' %}
+                        <b>Regime:</b> {{vaga.regime}}
+                      {% endif %}</b></span>
+                    </div>
+                   <div>
+
+                   </div>
+                  </div>
+                </div>                
+            </div>              
+            {% if not forloop.last %}
+            <hr id="{{forloop.counter}}-hr">            
+            {% endif %}
             </tr>
           {% endfor %}
       </tbody>
@@ -78,6 +113,14 @@
       table{
         font-size:  0.9em;
       }
+      h4{
+        color: #507B9B;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .text-gray{
+        color: gray;
+      }
     </style>
     <script>
       function showEditIcon(id){
@@ -87,13 +130,28 @@
         id.style.visibility='hidden'              
       }
       $(document).ready(function(){
-        $("#buscador").on("keyup", function() {
+        $("#buscador").on("keyup", function() {          
           var value = $(this).val().toLowerCase();
-          $("#busca tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          
+          $("#busca tr").filter(function(t) {  
+            tr=document.getElementById(this.id)                                           
+            div=document.getElementById(this.id+'-div')
+            
+            cargo=document.getElementById(this.id+'-cargo').innerText.toLowerCase() 
+            console.log(value + ' ' +cargo.indexOf(value))               
+            if (cargo.indexOf(value)>=0) {
+                
+                div.style.display = "block";
+                tr.style.display = "block";
+            }else {
+                
+                div.style.display = "none";
+                tr.style.display = "none";                
+            }
+
           });
         });
-      });
+      });      
     </script>
 </div>
 {% endblock %}

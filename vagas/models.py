@@ -65,10 +65,20 @@ class Vaga_Emprego(models.Model):
                             ('Não', 'Não')
     )
     
+    TIPO_DE_VAGA_CHOICES=(
+                            ('NML', 'Normal'),
+                            ('JAP', 'Jovem aprendiz'),
+                            ('PED', 'Pessoa com deficiência')
+    )
+
     empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)        
     cargo=models.ForeignKey(Cargo, on_delete=models.CASCADE)
     quantidadeVagas=models.IntegerField(blank=False, null=False, verbose_name='Quantidade de vagas')
+    tipo_de_vaga=models.CharField(max_length=3, choices=TIPO_DE_VAGA_CHOICES, default='NML')
     escolaridade=models.ForeignKey(Escolaridade, on_delete=models.CASCADE)
+    salario=models.CharField(max_length=50, default='', blank=True)
+    carga_horaria=models.CharField(max_length=50, default='', blank=True)
+    regime=models.CharField(max_length=100, default='', blank=True)
     experiencia=models.CharField(max_length=3, choices=EXPERIENCIA_CHOICES, verbose_name='Experiência')    
     atribuicoes=models.TextField(default='', blank=True)
     destaque=models.BooleanField(default=False)
